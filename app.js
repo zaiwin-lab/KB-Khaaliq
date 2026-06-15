@@ -21,28 +21,28 @@
 
   /* ---------- the 4 moments + success ------------------------------ */
   const STEPS = [
-    { name: "About you", encourage: "Takes about a minute.", html: `
-      <h2>First, the essentials</h2>
-      <p class="lead">Just enough to reach you and get started. Nothing more.</p>
+    { name: "About you", nameKey: "step.about", html: `
+      <h2 data-i18n="f.about.title">First, the essentials</h2>
+      <p class="lead" data-i18n="f.about.lead">Just enough to reach you and get started. Nothing more.</p>
       <div class="grid-2">
-        <div class="field"><label>Business name <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.biz">Business name</span> <span class="req">*</span></label>
           <input data-field="businessName" required autocomplete="organization" /><div class="field-error">Please add your business name</div></div>
-        <div class="field"><label>Your name <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.name">Your name</span> <span class="req">*</span></label>
           <input data-field="ownerName" required autocomplete="name" /><div class="field-error">Please add your name</div></div>
-        <div class="field"><label>WhatsApp number <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.wa">WhatsApp number</span> <span class="req">*</span></label>
           <input data-field="mobile" type="tel" placeholder="012-345 6789" required autocomplete="tel" /><div class="field-error">Please add a number</div></div>
-        <div class="field"><label>Email <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.email">Email</span> <span class="req">*</span></label>
           <input data-field="email" type="email" required autocomplete="email" /><div class="field-error">Enter a valid email</div></div>
-        <div class="field"><label>What kind of business? <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.cat">What kind of business?</span> <span class="req">*</span></label>
           <select data-field="category" required>${opts(D.CATEGORIES, "Choose one…")}</select><div class="field-error">Please choose</div></div>
-        <div class="field"><label>District <span class="req">*</span></label>
+        <div class="field"><label><span data-i18n="f.dist">District</span> <span class="req">*</span></label>
           <select data-field="district" required>${opts(D.DISTRICTS, "Choose your district…")}</select><div class="field-error">Please choose</div></div>
       </div>
     `},
 
-    { name: "Your links", encourage: "Paste once. We sort it for you.", html: `
-      <h2>Drop all your links here</h2>
-      <p class="lead">Website, Facebook, Instagram, TikTok, Shopee, Google, anything.
+    { name: "Your links", nameKey: "step.links", html: `
+      <h2 data-i18n="f.links.title">Drop all your links here</h2>
+      <p class="lead" data-i18n="f.links.lead">Website, Facebook, Instagram, TikTok, Shopee, Google, anything.
         Paste them all in one go, any order. Our AI sorts and labels each one.</p>
       <div class="field">
         <textarea id="linkDump" data-field="linkDumpText" rows="5"
@@ -55,13 +55,13 @@ https://mybiz.com"></textarea>
       <p class="hint" id="linkHint">No links yet? No problem, you can skip this.</p>
     `},
 
-    { name: "Your files", encourage: "One pile. AI tidies it.", html: `
-      <h2>Drop your files in one place</h2>
-      <p class="lead">Logo, business profile, product photos, certificates, PDFs.
+    { name: "Your files", nameKey: "step.files", html: `
+      <h2 data-i18n="f.files.title">Drop your files in one place</h2>
+      <p class="lead" data-i18n="f.files.lead">Logo, business profile, product photos, certificates, PDFs.
         Drop everything together, our AI files each one into the right category.</p>
       <div class="dropzone" id="dropzone">
         <div class="dz-ic">📎</div>
-        <strong>Drag &amp; drop everything here</strong><span> or tap to browse</span>
+        <strong data-i18n="f.dz">Drag &amp; drop everything here</strong><span data-i18n="f.dz2"> or tap to browse</span>
         <span class="hint">PDF · DOC · PPT · JPG · PNG · WEBP · ZIP</span>
         <input type="file" id="fileInput" multiple hidden
           accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png,.webp,.zip" />
@@ -69,31 +69,31 @@ https://mybiz.com"></textarea>
       <div class="file-list" id="fileList"></div>
     `},
 
-    { name: "Your story", encourage: "Last one. Then meet your AI summary.", html: `
-      <h2>Tell us your story</h2>
-      <p class="lead">A couple of lines is plenty. The more you share, the smarter
+    { name: "Your story", nameKey: "step.story", html: `
+      <h2 data-i18n="f.story.title">Tell us your story</h2>
+      <p class="lead" data-i18n="f.story.lead">A couple of lines is plenty. The more you share, the smarter
         we build, but only what you're comfortable with.</p>
-      <div class="field"><label>What does your business do?</label>
+      <div class="field"><label data-i18n="f.q1">What does your business do?</label>
         <textarea data-field="aiQ1" placeholder="Introduce it like you would to a new customer…"></textarea></div>
-      <div class="field"><label>Who are your ideal customers?</label>
+      <div class="field"><label data-i18n="f.q2">Who are your ideal customers?</label>
         <textarea data-field="aiQ2" rows="2"></textarea></div>
-      <div class="field"><label>What do you need help with? <span class="hint-inline">pick any</span></label>
+      <div class="field"><label data-i18n="f.needs">What do you need help with?</label>
         <div class="chips" data-chips>${chips("needs", D.NEEDS)}</div></div>
 
       <details class="more-toggle">
-        <summary>Want sharper results? Add a little more (optional)</summary>
-        <div class="field"><label>What makes you different?</label><textarea data-field="aiQ4" rows="2"></textarea></div>
-        <div class="field"><label>A competitor or two you watch</label><textarea data-field="comp1" rows="2" placeholder="Names or links"></textarea></div>
-        <div class="field"><label>Websites you love (inspiration)</label><textarea data-field="insp1" rows="2" placeholder="Links you like the look of"></textarea></div>
-        <div class="field"><label>Anything else?</label><textarea data-field="aiExtra" rows="2"></textarea></div>
+        <summary data-i18n="f.more">Want sharper results? Add a little more (optional)</summary>
+        <div class="field"><label data-i18n="f.diff">What makes you different?</label><textarea data-field="aiQ4" rows="2"></textarea></div>
+        <div class="field"><label data-i18n="f.comp">A competitor or two you watch</label><textarea data-field="comp1" rows="2" placeholder="Names or links"></textarea></div>
+        <div class="field"><label data-i18n="f.insp">Websites you love (inspiration)</label><textarea data-field="insp1" rows="2" placeholder="Links you like the look of"></textarea></div>
+        <div class="field"><label data-i18n="f.extra">Anything else?</label><textarea data-field="aiExtra" rows="2"></textarea></div>
       </details>
 
-      <button type="button" class="btn btn-dark" id="genSummary" style="margin:.4rem 0 1rem">✨ Generate my AI Business Summary</button>
+      <button type="button" class="btn btn-dark" id="genSummary" style="margin:.4rem 0 1rem" data-i18n="f.gen">✨ Generate my AI Business Summary</button>
       <div id="aiSummaryMount"></div>
 
       <div class="consent-block">
-        <label class="chip consent"><input type="checkbox" name="eligible" checked><span>Yes, I'd like to be one of the <strong>100 New Digital Presences</strong>.</span></label>
-        <label class="chip consent"><input type="checkbox" id="tcAll"><span>I confirm my details are accurate and agree KOBIS Berhad &amp; the Sarawak Digital Champion team may contact me and use this info for digital empowerment purposes.</span></label>
+        <label class="chip consent"><input type="checkbox" name="eligible" checked><span data-i18n="f.eligible">Yes, I'd like to be one of the <strong>100 New Digital Presences</strong>.</span></label>
+        <label class="chip consent"><input type="checkbox" id="tcAll"><span data-i18n="f.consent">I confirm my details are accurate and agree KOBIS Berhad &amp; the Sarawak Digital Champion team may contact me and use this info for digital empowerment purposes.</span></label>
         <div class="field-error" id="tcError">Please tick the confirmation to submit.</div>
       </div>
     `},
@@ -124,14 +124,15 @@ https://mybiz.com"></textarea>
     form.innerHTML = STEPS.map((s, i) =>
       `<section class="step ${i === current ? "active" : ""}" data-step="${i}">${s.html}</section>`).join("") + navHtml();
     hydrate(); wireStep(); updateProgress();
+    if (window.applyLanguage) window.applyLanguage(window.SDC_LANG || localStorage.getItem("sdc-lang") || "en");
   }
   function navHtml() {
     if (current >= TOTAL) return "";
     const last = current === TOTAL - 1;
     return `<div class="wizard-nav">
-      <button type="button" class="btn btn-ghost" id="prevBtn" ${current === 0 ? "style=visibility:hidden" : ""}>← Back</button>
+      <button type="button" class="btn btn-ghost" id="prevBtn" data-i18n="nav.back" ${current === 0 ? "style=visibility:hidden" : ""}>← Back</button>
       <span class="saved-tag" id="savedTag"></span>
-      <button type="button" class="btn btn-primary" id="nextBtn">${last ? "Submit my business ✓" : "Continue →"}</button>
+      <button type="button" class="btn btn-primary" id="nextBtn" data-i18n="${last ? "btn.submit" : "btn.continue"}">${last ? "Submit my business ✓" : "Continue →"}</button>
     </div>`;
   }
 
@@ -299,7 +300,8 @@ https://mybiz.com"></textarea>
     const shown = Math.min(current + 1, TOTAL);
     $("#stepNum").textContent = shown;
     $("#stepTotal").textContent = TOTAL;
-    $("#stepName").textContent = STEPS[Math.min(current, TOTAL - 1)].name;
+    const st = STEPS[Math.min(current, TOTAL - 1)];
+    $("#stepName").textContent = (window.SDC_I18N && st.nameKey && window.SDC_I18N.t(st.nameKey, window.SDC_LANG)) || st.name;
     $("#progressFill").style.width = (shown / TOTAL * 100) + "%";
   }
 

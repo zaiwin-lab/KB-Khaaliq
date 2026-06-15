@@ -27,15 +27,16 @@
       <span>Activate My Business <small>Sarawak Digital Champion</small></span>
     </a>
     <div class="head-cta">
-      <a class="btn btn-ghost btn-sm" href="index.html">← Back</a>
+      <div class="lang-switch" id="langSwitch"></div>
+      <a class="btn btn-ghost btn-sm" href="index.html" data-i18n="nav.back">← Back</a>
     </div>
   </div>
 </header>
 
 <section class="activate-intro">
   <div class="lp-wrap">
-    <h1>Let's get your business found.</h1>
-    <p>A few quick moments. No long forms. Our AI reads what you share and drafts
+    <h1 data-i18n="act.title">Let's get your business found.</h1>
+    <p data-i18n="act.sub">A few quick moments. No long forms. Our AI reads what you share and drafts
       your business profile for you, right here.</p>
   </div>
 </section>
@@ -44,7 +45,7 @@
   <div class="progress">
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div class="progress-meta">
-      <span>Step <strong id="stepNum">1</strong> of <strong id="stepTotal">4</strong></span>
+      <span><span data-i18n="p.step">Step</span> <strong id="stepNum">1</strong> <span data-i18n="p.of">of</span> <strong id="stepTotal">4</strong></span>
       <span id="stepName">About you</span>
     </div>
   </div>
@@ -63,5 +64,6 @@
 <script src="data.js"></script>
 <script src="engine.js"></script>
 <script src="app.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

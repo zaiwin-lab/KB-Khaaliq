@@ -464,3 +464,12 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
   .pillar-row { grid-template-columns: 1fr; }
   .offer-banner { padding: 1.5rem; }
 }
+
+/* ---- language switch (EN · BM · 中 · IB) ---- */
+.lang-switch { display: inline-flex; border: 1.5px solid var(--line); border-radius: 999px; overflow: hidden; background: #fff; }
+.lang-switch button { appearance: none; border: 0; background: transparent; cursor: pointer; font: inherit;
+  font-weight: 700; font-size: .76rem; color: var(--muted); padding: .34rem .55rem; line-height: 1; transition: .15s; }
+.lang-switch button + button { border-left: 1px solid var(--line); }
+.lang-switch button:hover { color: var(--navy-800); background: var(--paper); }
+.lang-switch button.active { background: var(--navy-800); color: #fff; }
+@media (max-width: 420px) { .lang-switch button { padding: .3rem .42rem; font-size: .72rem; } }
