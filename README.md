@@ -1,117 +1,86 @@
-# Sarawak Digital Champion — Business Activation Portal (Beta)
+# Sarawak Digital Champion — Abdul Khaaliq
 
-> **Empowering 100 New Digital Presences Across Sarawak**
->
-> Register your business today and let AI help us understand your needs before
-> building your digital presence.
+A two-part product for the Sarawak Digital Champion initiative (District Kuching),
+built for **KOBIS Berhad**:
 
-A **Business Intelligence Collection Engine** for the Sarawak Digital Champion
-initiative. Instead of collecting business info one-by-one over WhatsApp, every
-entrepreneur fills one structured, AI-ready profile that doubles as a CRM record,
-project brief, knowledge base, website requirement form, and onboarding system.
+1. **Khaaliq's Digital Champion landing** — his personal mission, the full service
+   offering as proof of capability, and a clear path to act.
+2. **Business Activation** — a short, "feel-good" form that turns each entrepreneur
+   into a structured, AI-ready client profile feeding the hybrid build pipeline.
 
-Built for **KOBIS Berhad** as the front end of the longer-term *Website Growth
-Engine* — each submission becomes a structured digital asset that can later feed
-automated website generation, proposal generation and chatbot creation.
+**Live:** https://khaaliqsdc.netlify.app
 
 ---
 
-## What's in here
+## Pages
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Landing hero + 12-step registration wizard |
-| `admin.html` | CRM / Business Intelligence dashboard |
-| `style.css`  | Design system (Navy · Orange · White, poster-inspired) |
-| `data.js`    | Reference data — 45 districts, categories, needs, statuses |
-| `engine.js`  | Shared intelligence: persistence, AI summary, lead score, brief/proposal generators |
-| `app.js`     | Wizard logic (validation, autosave draft, file vault, map, AI summary) |
-| `admin.js`   | Dashboard: triage, status pipeline, exports, AI generators |
+| `index.html` / `landing.js` | Khaaliq landing: hero, mission + 4 pillars, the RM500 offer, **16-point offering showcase**, how-it-works, support/share, final CTA |
+| `activate.html` / `app.js` | The short 4-moment form (see below) |
+| `dashboard.html` / `dashboard.js` | Team CRM + build pipeline (Client Folder export, ZIP intake) |
+| `admin.html` | Redirect → `dashboard.html` (keeps the old link working) |
+| `engine.js` | Intelligence layer: AI summary, lead score, smart classifiers, folder/prompt generators |
+| `data.js` | Districts, categories, offerings, pipeline statuses, Drive home |
+| `style.css` | Navy · Orange · White design system |
 
-No build step, no dependencies. Just static files + vanilla JS.
-
----
-
-## The 12-step flow
-
-1. **Business Information** — name, owner, contact, category, stage, district
-2. **Digital Presence Audit** — website, FB, IG, TikTok, LinkedIn, Google, Shopee, Lazada + dynamic links
-3. **Business Location** — map preview, geolocation capture, lat/long, operating area
-4. **AI Business Discovery** — 6 knowledge-base questions (the future AI brain)
-5. **Digital Needs Assessment** — 16 multi-select services
-6. **Competitor Analysis** — 3 competitors + likes / improvements
-7. **Inspiration Gallery** — 3 reference sites + why
-8. **File Vault** — drag & drop uploads, categorised
-9. **AI Assistant** — free text + instant **AI Business Summary** (the WOW factor)
-10. **Eligibility** — join the 100 / feature as success story
-11. **Terms & Conditions** — three required consents
-12. **Confirmation** — reference ID + final AI summary
-
-Progress is **autosaved as a draft** to the browser, so entrepreneurs can resume.
+No build step, no framework. Static files + vanilla JS. `dashboard.html` loads
+JSZip (CDN) only to package the Client Folder.
 
 ---
 
-## AI / Intelligence features (Beta = deterministic, production = LLM)
+## The short form (no more fatigue)
 
-The Beta ships a **deterministic, offline intelligence layer** in `engine.js`
-so everything works today with zero API keys:
+Four moments instead of twelve boxes:
 
-- **AI Business Summary** — industry, main customer, key challenge, recommended
-  solutions, digital readiness.
-- **Lead Score (1–100)** — weighted by completeness, existing digital presence,
-  readiness/stage, and needs/budget signals.
-- **Digital Readiness (x/10)**.
-- **Website Brief generator** — business summary, brand direction, site structure,
-  suggested copy, colors, features.
-- **Proposal generators** — Website / Sales Page / MVP.
+1. **About you** — 6 essentials only (business, name, WhatsApp, email, category, district).
+2. **🔗 Smart Link Dump** — paste *all* links in one box; the AI **detects and labels**
+   each (Facebook, Shopee, Google, Website…) live, as chips.
+3. **📎 Smart File Dump** — drop everything in one zone; the AI **auto-categorizes**
+   each file (Logo, Profile, Certificates…), with manual override.
+4. **Your story** — 2 light questions + needs, optional "add more" section, then an
+   instant **AI Business Summary** (the trust payoff). Eligibility + one consent. Submit.
 
-> **Going production:** replace the deterministic functions in `engine.js`
-> (`summarize`, `websiteBrief`, `proposal`) with calls to the Claude API, and
-> swap `loadAll/saveAll/upsert` for your backend API. The record shape stays
-> identical, so the UI needs no changes.
+Drafts autosave; encouraging microcopy throughout.
 
 ---
 
-## Admin dashboard
+## The hybrid build pipeline (dashboard)
 
-`admin.html` reads the same records and provides:
+Mirrors the KOBIS flow end to end. Pipeline stages:
 
-- KPI cards (total, avg lead score, want-to-join-100, in-build/activated)
-- Search, status filter, sort (score / newest / name)
-- Detail drawer: full profile, links repository, AI notes, competitors,
-  inspiration, files, AI summary
-- **Status pipeline:** New → Reviewing → Contacted → Approved →
-  Website In Progress → Website Delivered → Activated
-- **AI generators** (Website Brief + Proposals) per record
-- **Export** to JSON and CSV
-- **Load sample data** to explore with 3 demo businesses
+`New → Reviewing → Folder Exported → Build Ready → Website In Progress → Preview Sent → Paid → Onboarded → Published`
+
+Per client, the dashboard gives:
+
+- **⬇ Export Client Folder (.zip)** — a structured folder containing:
+  - `01_chatgpt-superprompt.txt` — pre-filled ChatGPT prompt
+  - `02_notebooklm-source.md` — clean source for NotebookLM → Profile2Website PDF
+  - `03_business-brief.json`, `04_summary`, `05_links`, `06_files-manifest`
+- **Copy ChatGPT prompt** / **Copy NotebookLM source** — one-click to clipboard
+- **📦 ZIP intake** — drop the finished Profile2Website ZIP back in → flips the stage
+  to **Build Ready** for the Claude build session
+- Status pipeline, lead score, JSON/CSV export, search/filter/sort
+
+### Shared storage — Google Drive
+The shared home is the Drive folder **`SDC — Client Intake`** (one subfolder per
+client). The dashboard generates the exact folder structure to file there. Auto-sync
+from the live portal into Drive is the next phase (needs a small backend).
 
 ---
 
-## Data storage (Beta)
-
-Records persist to `localStorage` (`sdc_submissions_v1`) and drafts to
-`sdc_draft_v1`. This makes the portal fully functional with no server. File
-uploads store **metadata only** in Beta (name, size, category); wire binary
-upload to your object store / backend for production.
+## Beta data note
+Submissions persist to `localStorage` so everything works with zero backend. File
+uploads store metadata (name, size, category); binary upload + shared team storage
+arrive with the backend phase. The deterministic "AI" in `engine.js` is swappable
+for the Claude API without UI changes (the record shape stays identical).
 
 ---
 
 ## Run locally
-
-It's static — open `index.html` directly, or serve the folder:
-
 ```bash
 python3 -m http.server 8000
-# then visit http://localhost:8000/index.html  and  /admin.html
+# index.html · activate.html · dashboard.html
 ```
-
----
-
-## Design
-
-Inspired by the Sarawak Digital Champion posters — **Navy · Orange · White**,
-premium, clean, corporate, mobile-first. Tone is a *Digital Transformation
-Mission*, **not** political / campaign style.
 
 *This Digital Experience is Part of the KOBIS Berhad Innovation Ecosystem.*
