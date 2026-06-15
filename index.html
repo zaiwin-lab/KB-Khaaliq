@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sarawak Digital Champion — Business Activation Portal (Beta)</title>
+<meta name="description" content="Register your business with the Sarawak Digital Champion initiative. Let AI understand your needs before we build your digital presence. Empowering 100 new digital presences across Sarawak." />
+<!-- Critical CSS to prevent ticker FOUC (literal colors; variables not ready yet) -->
+<style>
+  *{box-sizing:border-box}
+  .ticker-bar{position:sticky;top:0;z-index:200;height:34px;overflow:hidden;background:#08182f;color:#cfe0f5;display:flex;align-items:center;font-size:.76rem}
+  .ticker-track{display:flex;white-space:nowrap}
+  .ticker-item{display:inline-flex;align-items:center;padding:0 1.6rem}
+  .ticker-icon{width:14px;height:14px;margin-right:7px;vertical-align:-2px;flex:none}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Mission ticker (corporate / mission tone — not campaign) -->
+<div class="ticker-bar" aria-hidden="true">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<header class="site-head">
+  <div class="head-inner">
+    <a class="brand" href="index.html" aria-label="Sarawak Digital Champion home">
+      <span class="logo">SDC</span>
+      <span>Sarawak Digital Champion
+        <small>Business Activation Portal · Beta</small></span>
+    </a>
+    <div class="head-cta">
+      <a class="btn btn-ghost btn-sm" href="admin.html">Admin</a>
+      <a class="btn btn-primary btn-sm" href="#register">Register</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">🚀 Digital Transformation Mission · 45 Districts</span>
+    <h1>Your Business Deserves To Be <span class="accent">Found.</span></h1>
+    <p class="sub">Join the Sarawak Digital Champion initiative and let us help build
+      your digital presence. Register your business today and let AI help us understand
+      your needs before building your digital presence.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#register">🚀 Register My Business</a>
+      <a class="btn btn-ghost" href="#how" style="color:#cfe0f5;border-color:rgba(255,255,255,.25)">How it works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>100</strong><span>New digital presences</span></div>
+      <div class="stat"><strong>45</strong><span>Sarawak districts</span></div>
+      <div class="stat"><strong>AI</strong><span>Business discovery</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTER PILLARS -->
+<div class="pillars" id="how">
+  <div class="pillars-grid">
+    <div class="pillar"><div class="ic">👥</div><h3>Inspire</h3><p>Motivating communities to embrace digital opportunities.</p></div>
+    <div class="pillar"><div class="ic">📈</div><h3>Empower</h3><p>Equipping entrepreneurs with the right digital knowledge and tools.</p></div>
+    <div class="pillar"><div class="ic">🚀</div><h3>Activate</h3><p>Driving digital presence and growth for local businesses.</p></div>
+    <div class="pillar"><div class="ic">🌐</div><h3>Impact</h3><p>Strengthening Sarawak's digital economy, one business at a time.</p></div>
+  </div>
+</div>
+
+<!-- WIZARD -->
+<main class="wizard-wrap" id="register">
+  <div class="progress">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span>Step <strong id="stepNum">1</strong> of <strong id="stepTotal">12</strong></span>
+      <span id="stepName">Business Information</span>
+    </div>
+  </div>
+
+  <form id="wizard" class="card" novalidate>
+    <!-- steps injected by app.js -->
+  </form>
+</main>
+
+<!-- FOOTER -->
+<footer class="site-foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="logo">SDC</div>
+      <strong style="color:#fff">Sarawak Digital Champion</strong>
+      <p>A digital empowerment mission to activate 100 new business digital
+        presences across all 45 districts of Sarawak — building presence,
+        credibility and opportunity online.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Initiative</h4>
+      <a href="#register">Register Business</a>
+      <a href="#how">Our 4 Pillars</a>
+      <a href="admin.html">Admin Dashboard</a>
+    </div>
+    <div class="foot-col">
+      <h4>Partners</h4>
+      <a href="#">SDEC · Digitalising Sarawak</a>
+      <a href="#">AZAM Sarawak</a>
+      <a href="#">Kamek Digital</a>
+    </div>
+  </div>
+  <p class="foot-copy">© 2026 Sarawak Digital Champion — Business Activation Portal (Beta). For digital empowerment purposes.</p>
+  <div class="kobis-bar">
+    <p>This Digital Experience is Part of the
+      <a class="kobis-link" href="https://www.kobisberhad.com" target="_blank" rel="noopener">KOBIS Berhad</a>
+      Innovation Ecosystem</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
