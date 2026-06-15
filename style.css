@@ -473,3 +473,11 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
 .lang-switch button:hover { color: var(--navy-800); background: var(--paper); }
 .lang-switch button.active { background: var(--navy-800); color: #fff; }
 @media (max-width: 420px) { .lang-switch button { padding: .3rem .42rem; font-size: .72rem; } }
+
+/* ---- pipeline: 2-step + embedded package list ---- */
+.pipe-step { font-size: .82rem; font-weight: 700; color: var(--navy-700); margin: 1rem 0 .5rem; }
+.pipe-step:first-of-type { margin-top: .4rem; }
+.zip-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .15rem; }
+.zip-info .pf { font-size: .82rem; color: var(--navy-800); font-weight: 600; }
+.zip-info .pf em { color: var(--muted); font-weight: 400; font-style: normal; }
+.zip-info .zip-meta { font-size: .74rem; color: var(--muted); margin-top: .2rem; }

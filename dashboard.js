@@ -77,6 +77,20 @@
   const link = (k, u) => u ? `<div class="d-row"><span class="k">${k}</span><a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a></div>` : "";
   const listv = a => (a && a.length) ? a.map(esc).join(", ") : "—";
 
+  // Embedded NotebookLM PDFs / extras held for the session so the complete
+  // ZIP can be rebuilt and re-downloaded without a backend (hybrid mode).
+  const ATTACHED = {};
+  function pkgHtml(pkg) {
+    const files = pkg.files || (pkg.name ? [{ name: pkg.name, size: pkg.size }] : []);
+    return `<div class="zip-filled">
+      <span class="zip-ic">📦</span>
+      <div class="zip-info"><b>Package attached</b>
+        ${files.map(f => `<span class="pf">${esc(f.name)} <em>${f.size ? (f.size / 1024).toFixed(0) + " KB" : ""}</em></span>`).join("")}
+        <span class="zip-meta">attached ${(pkg.at || "").slice(0, 10)} · click to add more</span></div>
+      <button class="icon-btn" id="zipRemove" title="Remove">×</button>
+    </div>`;
+  }
+
   function drawerHtml(r) {
     const s = r.summary || E.summarize(r);
     const links = (r.links && r.links.length)
@@ -102,23 +116,24 @@
 
       <div class="d-section pipeline">
         <h4>🔄 Hybrid Build Pipeline</h4>
-        <p class="pipe-note">Folder → ChatGPT → NotebookLM (Profile2Website PDF) → zip back → Claude builds.</p>
+        <p class="pipe-note">Folder → ChatGPT → NotebookLM (Profile2Website PDF) → embed → complete ZIP → Claude builds.</p>
+
+        <p class="pipe-step">① Export the starter folder for your team</p>
         <div class="d-actions">
           <button class="btn btn-dark btn-sm" id="dlFolder">⬇ Export Client Folder (.zip)</button>
           <button class="btn btn-ghost btn-sm" data-copy="prompt">Copy ChatGPT prompt</button>
           <button class="btn btn-ghost btn-sm" data-copy="notebook">Copy NotebookLM source</button>
         </div>
-        <p class="drive-note">📁 Shared home: Google Drive → <strong>${esc(D.DRIVE_ROOT)} / ${esc(E.clientFolder(r).folderName)}</strong></p>
+        <p class="drive-note">📁 Drive home: <strong>${esc(D.DRIVE_ROOT)} / ${esc(E.clientFolder(r).folderName)}</strong></p>
 
+        <p class="pipe-step">② Drop the NotebookLM PDF → download the complete client ZIP</p>
         <div class="zip-zone ${pkg ? "filled" : ""}" id="zipZone">
-          ${pkg
-            ? `<div class="zip-filled"><span class="zip-ic">📦</span>
-                 <div><b>${esc(pkg.name)}</b><span>${(pkg.size / 1024).toFixed(0)} KB · attached ${(pkg.at || "").slice(0,10)}</span></div>
-                 <button class="icon-btn" id="zipRemove" title="Remove">×</button></div>`
-            : `<span class="zip-ic">📦</span><strong>Drop the Profile2Website ZIP here</strong>
-               <span class="hint">Folder + PDF, zipped. This flips the stage to “Build Ready”.</span>
-               <input type="file" id="zipInput" accept=".zip,.pdf" hidden />`}
+          ${pkg ? pkgHtml(pkg) : `<span class="zip-ic">📦</span>
+            <strong>Drop the NotebookLM PDF (+ slides / extras) here</strong>
+            <span class="hint">Builds <b>${esc(E.clientFolder(r).folderName)}_COMPLETE.zip</b> with the PDF embedded, and flips the stage to “Build Ready”.</span>`}
+          <input type="file" id="zipInput" accept=".zip,.pdf,.ppt,.pptx,.png,.jpg,.jpeg,.webp" multiple hidden />
         </div>
+        ${pkg ? `<div class="d-actions"><button class="btn btn-dark btn-sm" id="rebuildZip">⬇ Re-download complete ZIP</button></div>` : ""}
         <div id="genOut" class="gen-output" style="display:none"></div>
       </div>
 
@@ -170,26 +185,51 @@
       catch (_) { const out = $("#genOut"); out.style.display = "block"; out.textContent = text; }
     });
 
-    // ZIP intake
+    // NotebookLM PDF intake → builds the complete client ZIP
     const zone = $("#zipZone"), input = $("#zipInput");
-    if (input) {
-      zone.onclick = () => input.click();
+    if (zone && input) {
+      zone.onclick = e => { if (!e.target.closest("#zipRemove")) input.click(); };
       zone.ondragover = e => { e.preventDefault(); zone.classList.add("drag"); };
       zone.ondragleave = () => zone.classList.remove("drag");
-      zone.ondrop = e => { e.preventDefault(); zone.classList.remove("drag"); attachZip(r, e.dataTransfer.files[0]); };
-      input.onchange = () => attachZip(r, input.files[0]);
+      zone.ondrop = e => { e.preventDefault(); zone.classList.remove("drag"); handleBuildFiles(r, e.dataTransfer.files); };
+      input.onchange = () => handleBuildFiles(r, input.files);
     }
+    const rb = $("#rebuildZip");
+    if (rb) rb.onclick = () => downloadComplete(r);
     const rm = $("#zipRemove");
-    if (rm) rm.onclick = e => { e.stopPropagation(); delete r.buildPackage; E.upsert(r); openDrawer(r.id); render(); };
+    if (rm) rm.onclick = e => { e.stopPropagation(); delete r.buildPackage; delete ATTACHED[r.id]; E.upsert(r); openDrawer(r.id); render(); };
 
     $("#delBtn").onclick = () => { if (confirm("Delete this submission permanently?")) { E.remove(r.id); closeDrawer(); render(); } };
   }
 
-  function attachZip(r, file) {
-    if (!file) return;
-    r.buildPackage = { name: file.name, size: file.size, at: new Date().toISOString() };
+  // Read dropped files into session memory, record metadata, flip stage,
+  // then build & download the complete ZIP with the PDF embedded.
+  async function handleBuildFiles(r, fileList) {
+    const files = Array.from(fileList || []); if (!files.length) return;
+    ATTACHED[r.id] = (ATTACHED[r.id] || []).concat(files.map(f => ({ name: f.name, size: f.size, blob: f })));
+    r.buildPackage = { files: ATTACHED[r.id].map(x => ({ name: x.name, size: x.size })), at: new Date().toISOString() };
     if (["New", "Reviewing", "Folder Exported"].includes(r.status)) r.status = "Build Ready";
-    E.upsert(r); openDrawer(r.id); render();
+    E.upsert(r);
+    await downloadComplete(r);
+    openDrawer(r.id); render();
+  }
+
+  async function downloadComplete(r) {
+    if (!window.JSZip) return alert("ZIP library not loaded.");
+    const folder = E.clientFolder(r);
+    const zip = new JSZip(), dir = zip.folder(folder.folderName);
+    folder.files.forEach(f => dir.file(f.path, f.content));
+    const sub = dir.folder("07_profile2website");
+    const att = ATTACHED[r.id] || [];
+    if (att.length) att.forEach(a => sub.file(a.name, a.blob));
+    else sub.file("_DROP_THE_PDF_HERE.txt",
+      "Re-drop the NotebookLM Profile2Website PDF on the dashboard to embed it here,\nthen this folder ships with the complete build package.");
+    dir.file("00_READ_ME.md", folder.files.find(f => f.path === "00_READ_ME.md").content +
+      `\n\n## Build package\n- Profile2Website files embedded under 07_profile2website/: ` +
+      (att.length ? att.map(a => a.name).join(", ") : "none yet") +
+      `\n- Hand this COMPLETE zip to the Claude build session.\n`);
+    const blob = await zip.generateAsync({ type: "blob" });
+    saveBlob(blob, folder.folderName + "_COMPLETE.zip");
   }
 
   /* ---------- exports ---------------------------------------------- */
