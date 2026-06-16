@@ -20,8 +20,8 @@
   function renderKpis(list) {
     const total = list.length;
     const avg = total ? Math.round(list.reduce((a, r) => a + (r.leadScore || 0), 0) / total) : 0;
-    const buildReady = list.filter(r => ["Build Ready", "Website In Progress"].includes(r.status)).length;
-    const live = list.filter(r => r.status === "Published").length;
+    const buildReady = list.filter(r => /^B|^C/.test(r.status || "")).length;
+    const live = list.filter(r => /^D/.test(r.status || "")).length;
     $("#kpis").innerHTML = `
       <div class="kpi accent"><strong>${total}</strong><span>Total registrations</span></div>
       <div class="kpi"><strong>${avg}</strong><span>Avg lead score</span></div>
@@ -55,7 +55,7 @@
         <td class="hide-sm">${esc(r.district || "—")}</td>
         <td class="hide-sm">${esc(r.category || "—")}</td>
         <td><span class="score-pill" style="background:${scoreColor(r.leadScore || 0)}">${r.leadScore || 0}</span></td>
-        <td><span class="status-tag">${esc(r.status || "New")}</span></td>
+        <td><span class="status-tag">${esc(r.status || "A · New")}</span></td>
         <td class="hide-sm" style="color:var(--muted);font-size:.82rem">${(r.submittedAt || "").slice(0, 10)}</td>
       </tr>`).join("");
     $$("#rows tr").forEach(tr => tr.onclick = () => openDrawer(tr.dataset.id));
@@ -148,12 +148,11 @@
           <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send preview on WhatsApp</a>
           <button class="btn btn-ghost btn-sm" id="copyMsg">Copy message</button>
         </div>
-        <p class="pipe-step" style="margin-top:.9rem">Move the client along</p>
+        <p class="pipe-step" style="margin-top:.9rem">Set the stage</p>
         <div class="d-actions">
-          <button class="btn btn-ghost btn-sm" data-set="Preview Sent">Preview Sent</button>
-          <button class="btn btn-ghost btn-sm" data-set="Paid">Paid ✓</button>
-          <button class="btn btn-ghost btn-sm" data-set="Onboarded">Onboarded</button>
-          <button class="btn btn-ghost btn-sm" data-set="Published">Published 🎉</button>
+          <button class="btn btn-ghost btn-sm" data-set="B · Building">B · Building</button>
+          <button class="btn btn-ghost btn-sm" data-set="C · Preview & Pay">C · Preview &amp; Pay</button>
+          <button class="btn btn-ghost btn-sm" data-set="D · Live">D · Live 🎉</button>
         </div>
       </div>
 
@@ -196,7 +195,6 @@
         "Binary files attach here once backend storage is enabled.");
       const blob = await zip.generateAsync({ type: "blob" });
       saveBlob(blob, top + ".zip");
-      if (r.status === "New" || r.status === "Reviewing") { r.status = "Folder Exported"; E.upsert(r); render(); $("#statusEdit").value = r.status; }
     };
 
     // STAGE C — preview link, WhatsApp send, payment + onboarding stage buttons
@@ -243,7 +241,7 @@
     const files = Array.from(fileList || []); if (!files.length) return;
     ATTACHED[r.id] = (ATTACHED[r.id] || []).concat(files.map(f => ({ name: f.name, size: f.size, blob: f })));
     r.buildPackage = { files: ATTACHED[r.id].map(x => ({ name: x.name, size: x.size })), at: new Date().toISOString() };
-    if (["New", "Reviewing", "Folder Exported"].includes(r.status)) r.status = "Build Ready";
+    if (/^A/.test(r.status || "")) r.status = "B · Building";
     E.upsert(r);
     await downloadComplete(r);
     openDrawer(r.id); render();
@@ -327,7 +325,7 @@
     base.forEach(b => {
       if (existing.has(b.businessName.toLowerCase())) return; // no duplicates
       const rec = Object.assign({ id: E.uid(), links: [], otherLinks: [], files: [],
-        createdAt: new Date().toISOString(), submittedAt: new Date().toISOString(), status: "New" }, b);
+        createdAt: new Date().toISOString(), submittedAt: new Date().toISOString(), status: "A · New" }, b);
       E.ingestLinks(b.linkText, rec);
       rec.summary = E.summarize(rec); rec.leadScore = rec.summary.leadScore;
       E.upsert(rec);

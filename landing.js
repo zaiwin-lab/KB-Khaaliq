@@ -18,7 +18,7 @@
 
   // pledge progress — real activated count, with a baseline so it never reads empty
   const all = E.loadAll();
-  const activated = all.filter(r => ["Preview Sent", "Paid", "Onboarded", "Published"].includes(r.status)).length;
+  const activated = all.filter(r => /^C|^D/.test(r.status || "")).length;
   const shown = Math.min(100, 12 + activated); // 12 baseline from the campaign so far
   const fill = $("#pledgeFill"), count = $("#pledgeCount");
   requestAnimationFrame(() => { fill.style.width = shown + "%"; });

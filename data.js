@@ -59,10 +59,9 @@
     "WhatsApp Automation", "Booking System"
   ];
 
-  // Operations pipeline — mirrors the KOBIS hybrid build flow end to end.
+  // Simple 4-stage pipeline (A → D), mirrors the KSA/KSB build flow.
   const STATUSES = [
-    "New", "Reviewing", "Folder Exported", "Build Ready",
-    "Website In Progress", "Preview Sent", "Paid", "Onboarded", "Published"
+    "A · New", "B · Building", "C · Preview & Pay", "D · Live"
   ];
 
   // What every business receives — straight from the SDC poster offer.
