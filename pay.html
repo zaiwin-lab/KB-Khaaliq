@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Activate Your Website · Sarawak Digital Champion</title>
+<meta name="description" content="Activate your business website for RM500 (50% off). Add AI chatbot, e-commerce, WhatsApp automation and more." />
+<style>
+  *{box-sizing:border-box}
+  .ticker-bar{position:sticky;top:0;z-index:200;height:34px;overflow:hidden;background:#08182f;color:#cfe0f5;display:flex;align-items:center;font-size:.76rem}
+  .ticker-track{display:flex;white-space:nowrap}
+  .ticker-item{display:inline-flex;align-items:center;padding:0 1.6rem}
+  .ticker-icon{width:14px;height:14px;margin-right:7px;vertical-align:-2px;flex:none}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="ticker-bar" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<header class="site-head">
+  <div class="head-inner">
+    <a class="brand" href="index.html">
+      <span class="logo">SDC</span>
+      <span><span data-i18n="brand.name">Khaaliq's Mission</span> <small data-i18n="brand.tag">Sarawak Digital Champion</small></span>
+    </a>
+    <div class="head-cta">
+      <div class="lang-switch" id="langSwitch"></div>
+      <a class="btn btn-ghost btn-sm" href="index.html">← Home</a>
+    </div>
+  </div>
+</header>
+
+<section class="pay-hero">
+  <span class="aurora aurora-1" aria-hidden="true"></span>
+  <span class="aurora aurora-2" aria-hidden="true"></span>
+  <div class="lp-wrap pay-hero-inner">
+    <span class="champion-tag">🎉 Digital Empowerment Offer · First 30 businesses</span>
+    <h1>Activate <span class="accent" id="bizName">your business</span> website</h1>
+    <p class="sub">Everything you need to get online, get found and grow. Pick add-ons if you want more power.</p>
+  </div>
+</section>
+
+<main class="pay-wrap lp-wrap">
+  <div class="pay-grid">
+    <!-- LEFT: package + add-ons -->
+    <div class="pay-main">
+      <div class="pay-card base-card">
+        <div class="base-head">
+          <div>
+            <h2>Website Activation</h2>
+            <p class="base-sub">Your complete professional website, built and launched.</p>
+          </div>
+          <div class="base-price">
+            <span class="was" id="wasPrice">RM1,000</span>
+            <strong id="nowPrice">RM500</strong>
+            <span class="off">50% OFF</span>
+          </div>
+        </div>
+        <ul class="incl-grid" id="inclGrid"></ul>
+      </div>
+
+      <div class="pay-card">
+        <h3 class="addon-title">Power up your website <span>(optional add-ons)</span></h3>
+        <p class="addon-lead">Tick anything you'd like. Your total updates instantly.</p>
+        <div class="addon-list" id="addonList"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: sticky order summary -->
+    <aside class="pay-side">
+      <div class="pay-card summary">
+        <h3>Your order</h3>
+        <div class="sum-rows" id="sumRows"></div>
+        <div class="sum-total"><span>Total</span><strong id="sumTotal">RM500</strong></div>
+        <a class="btn btn-primary btn-lg pay-cta" id="payBtn" target="_blank" rel="noopener">Confirm &amp; Pay →</a>
+        <button class="btn btn-ghost btn-sm" id="copyOrder" style="width:100%;justify-content:center;margin-top:.5rem">Copy order details</button>
+        <div class="pay-trust">
+          <span>🔒 SSL secured</span><span>✓ SDEC initiative</span><span>↺ Built to satisfaction</span>
+        </div>
+        <div class="pay-methods">
+          <p><strong>How to pay</strong></p>
+          <p>Tap <em>Confirm &amp; Pay</em> to send your order on WhatsApp. We'll reply with a secure
+            payment link or bank transfer details and start your build right away.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <p class="foot-copy">© 2026 Sarawak Digital Champion. Activation offer for local Sarawak businesses.</p>
+  <div class="kobis-bar">
+    <p>This Digital Experience is Part of the
+      <a class="kobis-link" href="https://www.kobisberhad.com" target="_blank" rel="noopener">KOBIS Berhad</a>
+      Innovation Ecosystem</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="engine.js"></script>
+<script src="pay.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

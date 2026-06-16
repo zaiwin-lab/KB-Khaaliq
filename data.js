@@ -85,6 +85,26 @@
     { t: "AI Chatbot & Automation", d: "Answer customers around the clock." }
   ];
 
+  // Activation offer + upsell add-ons shown on the checkout (pay) page.
+  const CURRENCY = "RM";
+  const ACTIVATION_PRICE = 500;
+  const ACTIVATION_WAS = 1000;
+  const ADDONS = [
+    { k: "AI Chatbot", p: 300, d: "Answers customers 24/7 on your site." },
+    { k: "WhatsApp Automation", p: 250, d: "Auto-replies, order alerts & follow-ups." },
+    { k: "E-Commerce Store", p: 600, d: "Sell online with cart & checkout." },
+    { k: "Booking System", p: 350, d: "Let customers book and pay online." },
+    { k: "Logo & Branding Kit", p: 200, d: "Professional logo + brand colours." },
+    { k: "SEO Setup", p: 300, d: "Rank higher and get found on Google." },
+    { k: "Google Business Profile", p: 150, d: "Show up on Google Maps & Search." },
+    { k: "Social Media Kit", p: 200, d: "Profile, covers & post templates." },
+    { k: "Business Email", p: 120, d: "you@yourbusiness.com (1 year)." },
+    { k: "Extra Language", p: 150, d: "Add BM / 中文 / Iban to your site." }
+  ];
+  // Khaaliq's WhatsApp number for orders (international format, no + or spaces).
+  // TODO: replace with the real number, e.g. "60128889999".
+  const KHAALIQ_WA = "";
+
   const STORAGE_KEY = "sdc_submissions_v1";
   const DRAFT_KEY = "sdc_draft_v2";
   const DRIVE_ROOT = "SDC — Client Intake"; // shared Google Drive home
@@ -92,6 +112,7 @@
   window.SDC_DATA = {
     DISTRICTS, CATEGORIES, STAGES, OPERATING_AREAS, CHALLENGES,
     NEEDS, FILE_CATEGORIES, HIGH_VALUE_NEEDS, STATUSES, OFFERINGS,
+    CURRENCY, ACTIVATION_PRICE, ACTIVATION_WAS, ADDONS, KHAALIQ_WA,
     STORAGE_KEY, DRAFT_KEY, DRIVE_ROOT
   };
 })();

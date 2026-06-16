@@ -148,6 +148,7 @@
           <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send preview on WhatsApp</a>
           <button class="btn btn-ghost btn-sm" id="copyMsg">Copy message</button>
           <button class="btn btn-ghost btn-sm" id="copyLink">Copy preview link</button>
+          <a class="btn btn-ghost btn-sm" id="payLink" href="${payUrl(r)}" target="_blank" rel="noopener">💳 Open pay page</a>
         </div>
         <div class="opens-row" id="opensRow" ${r.previewUrl ? "" : "style=display:none"}>
           <span class="opens-pill">👁 <b id="openCount">…</b> client opens</span>
@@ -310,12 +311,16 @@
     if (d.startsWith("0")) return "60" + d.slice(1);
     return "60" + d;
   }
+  function payUrl(r) {
+    return `${location.origin}/pay.html?b=${encodeURIComponent(r.businessName || "")}` +
+      `&name=${encodeURIComponent(r.ownerName || "")}&id=${encodeURIComponent(r.id)}`;
+  }
   function previewMessage(r) {
     const link = trackUrl(r) || r.previewUrl || "(link coming)";
     return `Hi ${r.ownerName || "there"}, your new ${r.businessName || "business"} website preview is ready! 🎉\n\n` +
       `Preview: ${link}\n\n` +
-      `Have a look — once you're happy, activation is RM500 (50% off, first 30 businesses). ` +
-      `Reply here to go ahead and we'll get you live.\n\n— Khaaliq's Mission · Sarawak Digital Champion`;
+      `Like it? Activate from RM500 (50% off, first 30 businesses) here:\n${payUrl(r)}\n\n` +
+      `— Khaaliq's Mission · Sarawak Digital Champion`;
   }
   function waHref(r) {
     const n = waNumber(r.mobile);
