@@ -276,7 +276,7 @@ https://mybiz.com"></textarea>
     collect();
     data.summary = E.summarize(data);
     data.leadScore = data.summary.leadScore;
-    data.status = "A · New";
+    data.status = "A · Analyze";
     data.submittedAt = new Date().toISOString();
     E.upsert(data);
     localStorage.removeItem(D.DRAFT_KEY);

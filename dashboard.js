@@ -19,14 +19,14 @@
   /* ---------- KPIs (pipeline aware) -------------------------------- */
   function renderKpis(list) {
     const total = list.length;
-    const avg = total ? Math.round(list.reduce((a, r) => a + (r.leadScore || 0), 0) / total) : 0;
-    const buildReady = list.filter(r => /^B|^C/.test(r.status || "")).length;
-    const live = list.filter(r => /^D/.test(r.status || "")).length;
+    const cnt = re => list.filter(r => re.test(r.status || "A")).length;
+    const a = cnt(/^A/), b = cnt(/^B/), c = cnt(/^C/), d = cnt(/^D/);
     $("#kpis").innerHTML = `
       <div class="kpi accent"><strong>${total}</strong><span>Total registrations</span></div>
-      <div class="kpi"><strong>${avg}</strong><span>Avg lead score</span></div>
-      <div class="kpi"><strong>${buildReady}</strong><span>In build pipeline</span></div>
-      <div class="kpi"><strong>${live}</strong><span>Published live</span></div>`;
+      <div class="kpi"><strong>${a}</strong><span>A · Analyze</span></div>
+      <div class="kpi"><strong>${b}</strong><span>B · Building</span></div>
+      <div class="kpi"><strong>${c}</strong><span>C · Preview &amp; Pay</span></div>
+      <div class="kpi"><strong>${d}</strong><span>D · Deploy</span></div>`;
   }
 
   /* ---------- table ------------------------------------------------- */
@@ -55,7 +55,7 @@
         <td class="hide-sm">${esc(r.district || "—")}</td>
         <td class="hide-sm">${esc(r.category || "—")}</td>
         <td><span class="score-pill" style="background:${scoreColor(r.leadScore || 0)}">${r.leadScore || 0}</span></td>
-        <td><span class="status-tag">${esc(r.status || "A · New")}</span></td>
+        <td><span class="status-tag">${esc(r.status || "A · Analyze")}</span></td>
         <td class="hide-sm" style="color:var(--muted);font-size:.82rem">${(r.submittedAt || "").slice(0, 10)}</td>
       </tr>`).join("");
     $$("#rows tr").forEach(tr => tr.onclick = () => openDrawer(tr.dataset.id));
@@ -116,7 +116,7 @@
       </div>
 
       <div class="d-section pipeline">
-        <h4>🔄 Build Pipeline — 3 simple stages</h4>
+        <h4>🔄 Build Pipeline — A · B · C · D</h4>
 
         <p class="pipe-step">STAGE A · Download the client's input</p>
         <div class="d-actions">
@@ -129,7 +129,7 @@
         <div class="zip-zone ${pkg ? "filled" : ""}" id="zipZone">
           ${pkg ? pkgHtml(pkg) : `<span class="zip-ic">⬆️</span>
             <strong>Drop the NotebookLM PDF here</strong>
-            <span class="hint">Builds &amp; downloads <b>KSB - ${esc(fb)}.zip</b> with the PDF embedded, and moves the stage to “Build Ready”.</span>`}
+            <span class="hint">Builds &amp; downloads <b>KSB - ${esc(fb)}.zip</b> with the PDF embedded, and moves the stage to “B · Building”.</span>`}
           <input type="file" id="zipInput" accept=".zip,.pdf,.ppt,.pptx,.png,.jpg,.jpeg,.webp" multiple hidden />
         </div>
         ${pkg ? `<div class="d-actions"><button class="btn btn-dark btn-sm" id="rebuildZip">⬇ Re-download “KSB - ${esc(fb)}.zip”</button></div>` : ""}
@@ -152,7 +152,7 @@
         <div class="d-actions">
           <button class="btn btn-ghost btn-sm" data-set="B · Building">B · Building</button>
           <button class="btn btn-ghost btn-sm" data-set="C · Preview & Pay">C · Preview &amp; Pay</button>
-          <button class="btn btn-ghost btn-sm" data-set="D · Live">D · Live 🎉</button>
+          <button class="btn btn-ghost btn-sm" data-set="D · Deploy">D · Deploy 🚀</button>
         </div>
       </div>
 
@@ -325,7 +325,7 @@
     base.forEach(b => {
       if (existing.has(b.businessName.toLowerCase())) return; // no duplicates
       const rec = Object.assign({ id: E.uid(), links: [], otherLinks: [], files: [],
-        createdAt: new Date().toISOString(), submittedAt: new Date().toISOString(), status: "A · New" }, b);
+        createdAt: new Date().toISOString(), submittedAt: new Date().toISOString(), status: "A · Analyze" }, b);
       E.ingestLinks(b.linkText, rec);
       rec.summary = E.summarize(rec); rec.leadScore = rec.summary.leadScore;
       E.upsert(rec);

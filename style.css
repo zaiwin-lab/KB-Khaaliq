@@ -270,7 +270,7 @@ input.invalid, select.invalid, textarea.invalid { border-color: #e0494b; box-sha
 .admin-wrap { max-width: 1180px; margin: 2rem auto; padding: 0 1.25rem; }
 .admin-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
 .admin-head h1 { font-size: 1.6rem; margin: 0; }
-.kpis { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.kpis { display: grid; grid-template-columns: repeat(5,1fr); gap: 1rem; margin-bottom: 1.5rem; }
 .kpi { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.1rem 1.2rem; box-shadow: var(--shadow); }
 .kpi strong { display: block; font-size: 1.9rem; font-weight: 900; color: var(--navy-800); }
 .kpi span { font-size: .8rem; color: var(--muted); }

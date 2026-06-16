@@ -61,7 +61,7 @@
 
   // Simple 4-stage pipeline (A → D), mirrors the KSA/KSB build flow.
   const STATUSES = [
-    "A · New", "B · Building", "C · Preview & Pay", "D · Live"
+    "A · Analyze", "B · Building", "C · Preview & Pay", "D · Deploy"
   ];
 
   // What every business receives — straight from the SDC poster offer.
