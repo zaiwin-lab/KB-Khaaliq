@@ -615,3 +615,10 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
   background: var(--navy-800); color: #fff; }
 .preview-row { display: flex; gap: .5rem; margin-bottom: .7rem; }
 .preview-row input { flex: 1; }
+
+/* ---- Stage C: client open counter ---- */
+.opens-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin-top: .7rem; }
+.opens-pill { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 700; color: var(--navy-800);
+  background: rgba(139,92,246,.12); border: 1px solid rgba(139,92,246,.3); border-radius: 999px; padding: .4rem .8rem; }
+.opens-pill b { font-size: 1.05rem; color: var(--violet-600); }
+.opens-hint { font-size: .78rem; color: var(--muted); flex-basis: 100%; }

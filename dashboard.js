@@ -147,6 +147,12 @@
         <div class="d-actions">
           <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send preview on WhatsApp</a>
           <button class="btn btn-ghost btn-sm" id="copyMsg">Copy message</button>
+          <button class="btn btn-ghost btn-sm" id="copyLink">Copy preview link</button>
+        </div>
+        <div class="opens-row" id="opensRow" ${r.previewUrl ? "" : "style=display:none"}>
+          <span class="opens-pill">👁 <b id="openCount">…</b> client opens</span>
+          <button class="btn btn-ghost btn-sm" id="refreshOpens">↻ Refresh</button>
+          <span class="opens-hint">More opens = more interest. Great moment to nudge for payment.</span>
         </div>
         <p class="pipe-step" style="margin-top:.9rem">Set the stage</p>
         <div class="d-actions">
@@ -202,13 +208,27 @@
     if (wa) wa.href = waHref(r);
     if (pv) {
       pv.oninput = () => { r.previewUrl = pv.value.trim(); if (wa) wa.href = waHref(r); };
-      $("#savePreview").onclick = () => { r.previewUrl = pv.value.trim(); E.upsert(r); flashBtn($("#savePreview"), "Saved ✓"); };
+      $("#savePreview").onclick = () => { r.previewUrl = pv.value.trim(); E.upsert(r); openDrawer(r.id); };
     }
     const cm = $("#copyMsg");
     if (cm) cm.onclick = async () => {
       try { await navigator.clipboard.writeText(previewMessage(r)); flashBtn(cm, "Copied ✓"); }
       catch (_) { const out = $("#genOut"); out.style.display = "block"; out.textContent = previewMessage(r); }
     };
+    const cl = $("#copyLink");
+    if (cl) cl.onclick = async () => {
+      try { await navigator.clipboard.writeText(trackUrl(r) || r.previewUrl || ""); flashBtn(cl, "Copied ✓"); }
+      catch (_) {}
+    };
+    // open-counter (only when a preview link exists)
+    const oc = $("#openCount"), ro = $("#refreshOpens");
+    async function loadOpens() {
+      if (!oc) return; oc.textContent = "…";
+      const n = await fetchOpens(r);
+      oc.textContent = n == null ? "—" : n;
+    }
+    if (r.previewUrl) loadOpens();
+    if (ro) ro.onclick = loadOpens;
     $$("[data-set]").forEach(b => b.onclick = () => { r.status = b.dataset.set; E.upsert(r); openDrawer(r.id); render(); });
 
     // copy helpers
@@ -268,6 +288,21 @@
   }
 
   /* ---------- Stage C helpers: WhatsApp preview message ------------- */
+  // Trackable preview link → routes via /p.html which counts the open,
+  // then redirects to the real preview URL. Lets us see client interest.
+  function countKey(r) { return String(r.id || "").replace(/[^A-Za-z0-9_-]/g, "-"); }
+  function trackUrl(r) {
+    return r.previewUrl
+      ? `${location.origin}/p.html?id=${encodeURIComponent(r.id)}&u=${encodeURIComponent(r.previewUrl)}`
+      : "";
+  }
+  async function fetchOpens(r) {
+    try {
+      const res = await fetch("https://abacus.jasoncameron.dev/get/khaaliqsdc/" + encodeURIComponent(countKey(r)));
+      const j = await res.json();
+      return typeof j.value === "number" ? j.value : 0;
+    } catch (_) { return null; }
+  }
   function waNumber(mobile) {
     let d = String(mobile || "").replace(/\D/g, "");
     if (!d) return "";
@@ -276,8 +311,9 @@
     return "60" + d;
   }
   function previewMessage(r) {
+    const link = trackUrl(r) || r.previewUrl || "(link coming)";
     return `Hi ${r.ownerName || "there"}, your new ${r.businessName || "business"} website preview is ready! 🎉\n\n` +
-      `Preview: ${r.previewUrl || "(link coming)"}\n\n` +
+      `Preview: ${link}\n\n` +
       `Have a look — once you're happy, activation is RM500 (50% off, first 30 businesses). ` +
       `Reply here to go ahead and we'll get you live.\n\n— Khaaliq's Mission · Sarawak Digital Champion`;
   }
