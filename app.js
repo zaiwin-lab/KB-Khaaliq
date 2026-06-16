@@ -42,7 +42,7 @@
 
     { name: "Your links", nameKey: "step.links", html: `
       <h2 data-i18n="f.links.title">Drop all your links here</h2>
-      <p class="lead" data-i18n="f.links.lead">Website, Facebook, Instagram, TikTok, Shopee, Google, anything.
+      <p class="lead" data-i18n="f.links.lead">Website, Facebook, Instagram, TikTok, Shopee, Google Maps, anything.
         Paste them all in one go, any order. Our AI sorts and labels each one.</p>
       <div class="field">
         <textarea id="linkDump" data-field="linkDumpText" rows="5"
@@ -58,7 +58,7 @@ https://mybiz.com"></textarea>
     { name: "Your files", nameKey: "step.files", html: `
       <h2 data-i18n="f.files.title">Drop your files in one place</h2>
       <p class="lead" data-i18n="f.files.lead">Logo, business profile, product photos, certificates, PDFs.
-        Drop everything together, our AI files each one into the right category.</p>
+        Drop everything together. Our AI sorts each one into the right category.</p>
       <div class="dropzone" id="dropzone">
         <div class="dz-ic">📎</div>
         <strong data-i18n="f.dz">Drag &amp; drop everything here</strong><span data-i18n="f.dz2"> or tap to browse</span>
