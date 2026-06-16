@@ -259,6 +259,11 @@
     return String(s || "client").trim().replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "_").slice(0, 48) || "client";
   }
+  // Filename-safe but human-readable (keeps spaces) — for "KSA - Name.zip".
+  function safeName(s) {
+    return String(s || "Client").replace(/[\\/:*?"<>|]/g, "").replace(/\s+/g, " ")
+      .trim().slice(0, 60) || "Client";
+  }
 
   function chatgptSuperPrompt(d) {
     const s = d.summary || summarize(d);
@@ -400,7 +405,8 @@ Status: ${d.status || "New"}
       : "No files uploaded.";
 
     return {
-      folderName: `Client_${slug(d.businessName)}_${(d.id || "").slice(-4)}`,
+      nameBase: safeName(d.businessName),
+      folderName: safeName(d.businessName),
       files: [
         { path: "00_READ_ME.md", content: readme },
         { path: "01_chatgpt-superprompt.txt", content: chatgptSuperPrompt(d) },
@@ -418,6 +424,6 @@ Status: ${d.status || "New"}
     summarize, leadScore, digitalReadiness, recommend,
     websiteBrief, proposal, presenceLinks,
     classifyLink, ingestLinks, classifyFile,
-    chatgptSuperPrompt, notebookLmSource, clientFolder, slug
+    chatgptSuperPrompt, notebookLmSource, clientFolder, slug, safeName
   };
 })();

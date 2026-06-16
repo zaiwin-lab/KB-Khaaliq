@@ -604,3 +604,14 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
 @media (prefers-reduced-motion: reduce) {
   .orb, .aurora, .spark, .vc-dot, .portrait-frame { animation: none !important; }
 }
+
+/* ---- dashboard: how-it-works strip + Stage C preview row ---- */
+.how-strip { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-bottom: 1.2rem;
+  padding: .8rem 1.1rem; border-radius: var(--radius-sm); font-size: .86rem; color: var(--navy-700);
+  background: linear-gradient(120deg, rgba(139,92,246,.10), rgba(244,124,32,.08)); border: 1px solid rgba(139,92,246,.25); }
+.how-strip strong { color: var(--navy-800); }
+.how-strip span { display: inline-flex; align-items: center; gap: .4rem; color: var(--muted); }
+.how-strip span b { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; font-size: .72rem;
+  background: var(--navy-800); color: #fff; }
+.preview-row { display: flex; gap: .5rem; margin-bottom: .7rem; }
+.preview-row input { flex: 1; }

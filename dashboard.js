@@ -101,6 +101,7 @@
       : `<div class="d-row"><span class="k">Files</span><span>—</span></div>`;
     const statusSel = D.STATUSES.map(st => `<option ${st === r.status ? "selected" : ""}>${st}</option>`).join("");
     const pkg = r.buildPackage;
+    const fb = E.clientFolder(r).nameBase;
 
     return `
       <div class="d-section">
@@ -115,26 +116,45 @@
       </div>
 
       <div class="d-section pipeline">
-        <h4>🔄 Hybrid Build Pipeline</h4>
-        <p class="pipe-note">Folder → ChatGPT → NotebookLM (Profile2Website PDF) → embed → complete ZIP → Claude builds.</p>
+        <h4>🔄 Build Pipeline — 3 simple stages</h4>
 
-        <p class="pipe-step">① Export the starter folder for your team</p>
+        <p class="pipe-step">STAGE A · Download the client's input</p>
         <div class="d-actions">
-          <button class="btn btn-dark btn-sm" id="dlFolder">⬇ Export Client Folder (.zip)</button>
+          <button class="btn btn-dark btn-sm" id="dlFolder">⬇ Download “KSA - ${esc(fb)}.zip”</button>
           <button class="btn btn-ghost btn-sm" data-copy="prompt">Copy ChatGPT prompt</button>
           <button class="btn btn-ghost btn-sm" data-copy="notebook">Copy NotebookLM source</button>
         </div>
-        <p class="drive-note">📁 Drive home: <strong>${esc(D.DRIVE_ROOT)} / ${esc(E.clientFolder(r).folderName)}</strong></p>
 
-        <p class="pipe-step">② Drop the NotebookLM PDF → download the complete client ZIP</p>
+        <p class="pipe-step">STAGE B · Upload the NotebookLM PDF → get the complete pack</p>
         <div class="zip-zone ${pkg ? "filled" : ""}" id="zipZone">
-          ${pkg ? pkgHtml(pkg) : `<span class="zip-ic">📦</span>
-            <strong>Drop the NotebookLM PDF (+ slides / extras) here</strong>
-            <span class="hint">Builds <b>${esc(E.clientFolder(r).folderName)}_COMPLETE.zip</b> with the PDF embedded, and flips the stage to “Build Ready”.</span>`}
+          ${pkg ? pkgHtml(pkg) : `<span class="zip-ic">⬆️</span>
+            <strong>Drop the NotebookLM PDF here</strong>
+            <span class="hint">Builds &amp; downloads <b>KSB - ${esc(fb)}.zip</b> with the PDF embedded, and moves the stage to “Build Ready”.</span>`}
           <input type="file" id="zipInput" accept=".zip,.pdf,.ppt,.pptx,.png,.jpg,.jpeg,.webp" multiple hidden />
         </div>
-        ${pkg ? `<div class="d-actions"><button class="btn btn-dark btn-sm" id="rebuildZip">⬇ Re-download complete ZIP</button></div>` : ""}
+        ${pkg ? `<div class="d-actions"><button class="btn btn-dark btn-sm" id="rebuildZip">⬇ Re-download “KSB - ${esc(fb)}.zip”</button></div>` : ""}
+        <p class="drive-note">📁 File both in Google Drive → <strong>${esc(D.DRIVE_ROOT)}</strong> (KSA in · KSB out)</p>
         <div id="genOut" class="gen-output" style="display:none"></div>
+      </div>
+
+      <div class="d-section pipeline">
+        <h4>🤝 STAGE C · Preview, payment &amp; onboarding</h4>
+        <p class="pipe-note">Share the finished site, take payment, then onboard.</p>
+        <div class="preview-row">
+          <input id="previewUrl" type="url" placeholder="Paste the website preview link (https://…)" value="${esc(r.previewUrl || "")}" />
+          <button class="btn btn-ghost btn-sm" id="savePreview">Save</button>
+        </div>
+        <div class="d-actions">
+          <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send preview on WhatsApp</a>
+          <button class="btn btn-ghost btn-sm" id="copyMsg">Copy message</button>
+        </div>
+        <p class="pipe-step" style="margin-top:.9rem">Move the client along</p>
+        <div class="d-actions">
+          <button class="btn btn-ghost btn-sm" data-set="Preview Sent">Preview Sent</button>
+          <button class="btn btn-ghost btn-sm" data-set="Paid">Paid ✓</button>
+          <button class="btn btn-ghost btn-sm" data-set="Onboarded">Onboarded</button>
+          <button class="btn btn-ghost btn-sm" data-set="Published">Published 🎉</button>
+        </div>
       </div>
 
       <div class="d-section"><h4>Business Profile</h4>
@@ -164,19 +184,34 @@
   function wireDrawer(r) {
     $("#statusEdit").onchange = e => { r.status = e.target.value; E.upsert(r); render(); };
 
-    // Export Client Folder as a ZIP
+    // STAGE A — download the client's input as "KSA - Name.zip"
     $("#dlFolder").onclick = async () => {
-      const folder = E.clientFolder(r);
       if (!window.JSZip) return alert("ZIP library not loaded.");
-      const zip = new JSZip(), dir = zip.folder(folder.folderName);
+      const folder = E.clientFolder(r);
+      const top = `KSA - ${folder.nameBase}`;
+      const zip = new JSZip(), dir = zip.folder(top);
       folder.files.forEach(f => dir.file(f.path, f.content));
       dir.folder("uploads").file("_README.txt",
         "Client-uploaded files are referenced in 06_files-manifest.txt.\n" +
         "Binary files attach here once backend storage is enabled.");
       const blob = await zip.generateAsync({ type: "blob" });
-      saveBlob(blob, folder.folderName + ".zip");
+      saveBlob(blob, top + ".zip");
       if (r.status === "New" || r.status === "Reviewing") { r.status = "Folder Exported"; E.upsert(r); render(); $("#statusEdit").value = r.status; }
     };
+
+    // STAGE C — preview link, WhatsApp send, payment + onboarding stage buttons
+    const pv = $("#previewUrl"), wa = $("#waClient");
+    if (wa) wa.href = waHref(r);
+    if (pv) {
+      pv.oninput = () => { r.previewUrl = pv.value.trim(); if (wa) wa.href = waHref(r); };
+      $("#savePreview").onclick = () => { r.previewUrl = pv.value.trim(); E.upsert(r); flashBtn($("#savePreview"), "Saved ✓"); };
+    }
+    const cm = $("#copyMsg");
+    if (cm) cm.onclick = async () => {
+      try { await navigator.clipboard.writeText(previewMessage(r)); flashBtn(cm, "Copied ✓"); }
+      catch (_) { const out = $("#genOut"); out.style.display = "block"; out.textContent = previewMessage(r); }
+    };
+    $$("[data-set]").forEach(b => b.onclick = () => { r.status = b.dataset.set; E.upsert(r); openDrawer(r.id); render(); });
 
     // copy helpers
     $$("[data-copy]").forEach(b => b.onclick = async () => {
@@ -214,10 +249,12 @@
     openDrawer(r.id); render();
   }
 
+  // STAGE B — build "KSB - Name.zip" with the NotebookLM PDF embedded.
   async function downloadComplete(r) {
     if (!window.JSZip) return alert("ZIP library not loaded.");
     const folder = E.clientFolder(r);
-    const zip = new JSZip(), dir = zip.folder(folder.folderName);
+    const top = `KSB - ${folder.nameBase}`;
+    const zip = new JSZip(), dir = zip.folder(top);
     folder.files.forEach(f => dir.file(f.path, f.content));
     const sub = dir.folder("07_profile2website");
     const att = ATTACHED[r.id] || [];
@@ -225,12 +262,33 @@
     else sub.file("_DROP_THE_PDF_HERE.txt",
       "Re-drop the NotebookLM Profile2Website PDF on the dashboard to embed it here,\nthen this folder ships with the complete build package.");
     dir.file("00_READ_ME.md", folder.files.find(f => f.path === "00_READ_ME.md").content +
-      `\n\n## Build package\n- Profile2Website files embedded under 07_profile2website/: ` +
+      `\n\n## Build package (KSB)\n- Profile2Website files embedded under 07_profile2website/: ` +
       (att.length ? att.map(a => a.name).join(", ") : "none yet") +
-      `\n- Hand this COMPLETE zip to the Claude build session.\n`);
+      `\n- Hand this COMPLETE (KSB) zip to the Claude build session.\n`);
     const blob = await zip.generateAsync({ type: "blob" });
-    saveBlob(blob, folder.folderName + "_COMPLETE.zip");
+    saveBlob(blob, top + ".zip");
   }
+
+  /* ---------- Stage C helpers: WhatsApp preview message ------------- */
+  function waNumber(mobile) {
+    let d = String(mobile || "").replace(/\D/g, "");
+    if (!d) return "";
+    if (d.startsWith("60")) return d;
+    if (d.startsWith("0")) return "60" + d.slice(1);
+    return "60" + d;
+  }
+  function previewMessage(r) {
+    return `Hi ${r.ownerName || "there"}, your new ${r.businessName || "business"} website preview is ready! 🎉\n\n` +
+      `Preview: ${r.previewUrl || "(link coming)"}\n\n` +
+      `Have a look — once you're happy, activation is RM500 (50% off, first 30 businesses). ` +
+      `Reply here to go ahead and we'll get you live.\n\n— Khaaliq's Mission · Sarawak Digital Champion`;
+  }
+  function waHref(r) {
+    const n = waNumber(r.mobile);
+    const base = n ? `https://wa.me/${n}` : `https://wa.me/`;
+    return `${base}?text=${encodeURIComponent(previewMessage(r))}`;
+  }
+  function flashBtn(b, txt) { if (!b) return; const o = b.textContent; b.textContent = txt; setTimeout(() => b.textContent = o, 1400); }
 
   /* ---------- exports ---------------------------------------------- */
   function saveBlob(blob, name) {
@@ -265,7 +323,9 @@
         aiQ2: "Tourists and cultural collectors", needs: ["Website", "E-Commerce", "Logo", "Branding"], eligible: true,
         linkText: "https://shopee.com.my/dayang https://tiktok.com/@dayangcraft" }
     ];
+    const existing = new Set(E.loadAll().map(x => (x.businessName || "").toLowerCase()));
     base.forEach(b => {
+      if (existing.has(b.businessName.toLowerCase())) return; // no duplicates
       const rec = Object.assign({ id: E.uid(), links: [], otherLinks: [], files: [],
         createdAt: new Date().toISOString(), submittedAt: new Date().toISOString(), status: "New" }, b);
       E.ingestLinks(b.linkText, rec);
