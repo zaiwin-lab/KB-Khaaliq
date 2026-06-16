@@ -71,7 +71,7 @@
       "f.diff": "What makes you different?", "f.comp": "A competitor or two you watch", "f.insp": "Websites you love (inspiration)", "f.extra": "Anything else?",
       "f.gen": "✨ Generate my AI Business Summary",
       "f.eligible": "Yes, I'd like to be one of the <strong>100 New Digital Presences</strong>.",
-      "f.consent": "I confirm my details are accurate and agree KOBIS Berhad & the Sarawak Digital Champion team may contact me and use this info for digital empowerment purposes.",
+      "f.consent": "I confirm my details are accurate and agree Khaaliq & the KOBIS Berhad team may contact me and use this info for digital empowerment purposes.",
       "btn.continue": "Continue →", "btn.submit": "Submit my business ✓"
     },
 
@@ -134,7 +134,7 @@
       "f.diff": "Apa yang membezakan anda?", "f.comp": "Satu dua pesaing yang anda perhati", "f.insp": "Laman web yang anda suka (inspirasi)", "f.extra": "Apa-apa lagi?",
       "f.gen": "✨ Jana Ringkasan Perniagaan AI saya",
       "f.eligible": "Ya, saya mahu menjadi salah satu daripada <strong>100 Kehadiran Digital Baharu</strong>.",
-      "f.consent": "Saya mengesahkan butiran saya tepat dan bersetuju KOBIS Berhad & pasukan Sarawak Digital Champion boleh menghubungi saya dan menggunakan maklumat ini untuk tujuan pemerkasaan digital.",
+      "f.consent": "Saya mengesahkan butiran saya tepat dan bersetuju Khaaliq & pasukan KOBIS Berhad boleh menghubungi saya dan menggunakan maklumat ini untuk tujuan pemerkasaan digital.",
       "btn.continue": "Teruskan →", "btn.submit": "Hantar perniagaan saya ✓"
     },
 
@@ -197,7 +197,7 @@
       "f.diff": "您的与众不同之处？", "f.comp": "一两个您关注的竞争对手", "f.insp": "您喜欢的网站（灵感）", "f.extra": "还有其他吗？",
       "f.gen": "✨ 生成我的 AI 企业摘要",
       "f.eligible": "是的，我想成为 <strong>100个新数字存在</strong> 之一。",
-      "f.consent": "我确认我的资料属实，并同意 KOBIS Berhad 与砂拉越数字大使团队可联系我，并将此信息用于数字赋能用途。",
+      "f.consent": "我确认我的资料属实，并同意 Khaaliq 与 KOBIS Berhad 团队可联系我，并将此信息用于数字赋能用途。",
       "btn.continue": "继续 →", "btn.submit": "提交我的企业 ✓"
     },
 
@@ -260,7 +260,7 @@
       "f.diff": "Nama ti nyadika nuan beda?", "f.comp": "Siti dua penyaing ti dipeda nuan", "f.insp": "Laman web ti dikerinduka nuan (inspirasi)", "f.extra": "Bisi utai bukai?",
       "f.gen": "✨ Ngaga Ringkas Pengawa AI aku",
       "f.eligible": "Au, aku deka nyadi siti ari <strong>100 Pengidup Digital Baru</strong>.",
-      "f.consent": "Aku ngesahka utai aku amat lalu setuju KOBIS Berhad & pasukan Sarawak Digital Champion ulih ngabas aku lalu ngena penerang tu kena tujuah pemansang digital.",
+      "f.consent": "Aku ngesahka utai aku amat lalu setuju Khaaliq & pasukan KOBIS Berhad ulih ngabas aku lalu ngena penerang tu kena tujuah pemansang digital.",
       "btn.continue": "Terus →", "btn.submit": "Kirim pengawa aku ✓"
     }
   };

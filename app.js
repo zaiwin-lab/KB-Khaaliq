@@ -93,7 +93,7 @@ https://mybiz.com"></textarea>
 
       <div class="consent-block">
         <label class="chip consent"><input type="checkbox" name="eligible" checked><span data-i18n="f.eligible">Yes, I'd like to be one of the <strong>100 New Digital Presences</strong>.</span></label>
-        <label class="chip consent"><input type="checkbox" id="tcAll"><span data-i18n="f.consent">I confirm my details are accurate and agree KOBIS Berhad &amp; the Sarawak Digital Champion team may contact me and use this info for digital empowerment purposes.</span></label>
+        <label class="chip consent"><input type="checkbox" id="tcAll"><span data-i18n="f.consent">I confirm my details are accurate and agree Khaaliq &amp; the KOBIS Berhad team may contact me and use this info for digital empowerment purposes.</span></label>
         <div class="field-error" id="tcError">Please tick the confirmation to submit.</div>
       </div>
     `},
