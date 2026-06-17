@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex,nofollow" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<meta name="theme-color" content="#0b2a52" />
 <title>Team Dashboard · Sarawak Digital Champion</title>
 <!-- Login guard: no valid session → bounce to the login page before anything renders. -->
 <script>if(sessionStorage.getItem("sdc_admin_ok")!=="ok"){location.replace("admin.html");}</script>
@@ -21,6 +23,7 @@
     </a>
     <div class="head-cta">
       <a class="btn btn-ghost btn-sm" href="index.html">← Site</a>
+      <button class="btn btn-ghost btn-sm" id="syncBtn">🔄 Sync</button>
       <button class="btn btn-dark btn-sm" id="seedBtn">Load sample data</button>
       <button class="btn btn-primary btn-sm" id="exportBtn">Export all</button>
       <button class="btn btn-ghost btn-sm" id="logoutBtn">Log out</button>
@@ -82,6 +85,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="data.js"></script>
 <script src="engine.js"></script>
+<script src="sync.js"></script>
 <script src="dashboard.js"></script>
 <script>
   document.getElementById("logoutBtn").addEventListener("click", function () {

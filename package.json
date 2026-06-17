@@ -1,0 +1,9 @@
+{
+  "name": "khaaliqsdc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sarawak Digital Champion — Khaaliq's Mission portal",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

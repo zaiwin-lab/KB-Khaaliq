@@ -1,0 +1,4 @@
+# Netlify configuration — static site + serverless functions for shared data.
+[build]
+  publish = "."
+  functions = "netlify/functions"

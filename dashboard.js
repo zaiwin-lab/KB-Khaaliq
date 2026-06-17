@@ -6,6 +6,14 @@
 (function () {
   "use strict";
   const D = window.SDC_DATA, E = window.SDC_ENGINE;
+
+  /* ---------- shared-data sync (Netlify Blobs via sync.js) ----------
+     Wrap the engine's writes so every dashboard edit also pushes to the
+     shared store; keep the originals for cloud→local merges (no echo). */
+  const _upsert = E.upsert, _remove = E.remove;
+  E.upsert = function (r) { const out = _upsert(r); if (window.SDC_SYNC) window.SDC_SYNC.push(r); return out; };
+  E.remove = function (id) { const out = _remove(id); if (window.SDC_SYNC) window.SDC_SYNC.remove(id); return out; };
+
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c =>
@@ -476,5 +484,21 @@
   $("#seedBtn").onclick = () => { if (E.loadAll().length && !confirm("Add 3 sample businesses?")) return; seed(); };
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
 
-  render();
+  /* ---------- pull shared submissions from the cloud ---------------- */
+  async function syncFromCloud(btn) {
+    if (btn) flashBtn(btn, "Syncing…", 4000);
+    render(); // show whatever is local immediately
+    if (!window.SDC_SYNC) { if (btn) flashBtn(btn, "Offline"); return; }
+    const cloud = await window.SDC_SYNC.pull();
+    if (Array.isArray(cloud)) {
+      cloud.forEach(rec => { if (rec && rec.id) _upsert(rec); }); // raw write → no echo back
+      render();
+      if (btn) flashBtn(btn, "Synced ✓");
+    } else if (btn) { flashBtn(btn, "Sync failed"); }
+  }
+  const syncBtn = $("#syncBtn");
+  if (syncBtn) syncBtn.onclick = () => syncFromCloud(syncBtn);
+
+  syncFromCloud();                      // on load
+  setInterval(() => { if (!document.querySelector(".drawer.open")) syncFromCloud(); }, 30000); // keep fresh
 })();

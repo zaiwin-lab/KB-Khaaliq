@@ -279,6 +279,7 @@ https://mybiz.com"></textarea>
     data.status = "A · Analyze";
     data.submittedAt = new Date().toISOString();
     E.upsert(data);
+    if (window.SDC_SYNC) window.SDC_SYNC.push(data); // → team dashboard (any device)
     localStorage.removeItem(D.DRAFT_KEY);
     current = STEPS.length - 1; render();
     $("#refId").textContent = data.id;
