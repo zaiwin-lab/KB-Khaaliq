@@ -125,7 +125,7 @@
   // NOTE: this is a lightweight gate for beta — it keeps clients & casual
   // visitors out, but is not bank-grade security. Real auth arrives with
   // the shared backend phase.
-  const ADMIN_PASS = "sdc2026";
+  const ADMIN_PASS = "Khaaliq#Kuching2026";
   const ADMIN_KEY = "sdc_admin_ok";
 
   window.SDC_DATA = {
