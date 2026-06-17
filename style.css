@@ -492,6 +492,17 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
 .lang-switch button.active { background: var(--navy-800); color: #fff; }
 @media (max-width: 420px) { .lang-switch button { padding: .3rem .42rem; font-size: .72rem; } }
 
+/* ---- mobile header: stop the language toggle + CTA from cramping ---- */
+@media (max-width: 600px) {
+  .head-inner { flex-wrap: wrap; gap: .45rem .6rem; padding: .55rem .95rem; }
+  .head-cta { flex: 1 1 100%; justify-content: flex-end; }
+  .head-cta .btn-primary { padding: .5rem .85rem; font-size: .82rem; }
+}
+@media (max-width: 360px) {
+  .head-cta .btn-primary { padding: .45rem .65rem; font-size: .76rem; }
+  .lang-switch button { padding: .3rem .38rem; font-size: .7rem; }
+}
+
 /* ---- pipeline: 2-step + embedded package list ---- */
 .pipe-step { font-size: .82rem; font-weight: 700; color: var(--navy-700); margin: 1rem 0 .5rem; }
 .pipe-step:first-of-type { margin-top: .4rem; }
