@@ -105,10 +105,17 @@
   const DRAFT_KEY = "sdc_draft_v2";
   const DRIVE_ROOT = "SDC — Client Intake"; // shared Google Drive home
 
+  // Team panel passcode. Change this to your own secret before sharing.
+  // NOTE: this is a lightweight gate for beta — it keeps clients & casual
+  // visitors out, but is not bank-grade security. Real auth arrives with
+  // the shared backend phase.
+  const ADMIN_PASS = "sdc2026";
+  const ADMIN_KEY = "sdc_admin_ok";
+
   window.SDC_DATA = {
     DISTRICTS, CATEGORIES, STAGES, OPERATING_AREAS, CHALLENGES,
     NEEDS, FILE_CATEGORIES, HIGH_VALUE_NEEDS, STATUSES, OFFERINGS,
     CURRENCY, ACTIVATION_PRICE, ACTIVATION_WAS, ADDONS, KHAALIQ_WA,
-    STORAGE_KEY, DRAFT_KEY, DRIVE_ROOT
+    STORAGE_KEY, DRAFT_KEY, DRIVE_ROOT, ADMIN_PASS, ADMIN_KEY
   };
 })();

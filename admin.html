@@ -2,9 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta http-equiv="refresh" content="0; url=dashboard.html" />
-<title>Redirecting to Dashboard…</title>
-<script>location.replace("dashboard.html");</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Team Login · Sarawak Digital Champion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;
+    background:radial-gradient(1200px 600px at 50% -10%,#13294d 0%,#08182f 60%,#050f1f 100%)}
+  .login-card{width:100%;max-width:380px;background:#fff;border-radius:18px;padding:2.2rem 2rem;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);text-align:center}
+  .login-logo{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;
+    border-radius:13px;background:#0b2a52;color:#ff7a1a;font-weight:900;font-size:1.1rem;letter-spacing:.5px;margin-bottom:.9rem}
+  .login-card h1{font-size:1.3rem;margin:.2rem 0 .15rem}
+  .login-card p.sub{color:#5b6b80;font-size:.9rem;margin:0 0 1.4rem}
+  .login-field{text-align:left;margin-bottom:1rem}
+  .login-field label{display:block;font-size:.8rem;font-weight:600;color:#33445c;margin-bottom:.35rem}
+  .login-field input{width:100%;padding:.8rem .9rem;border:1.5px solid #d7e0ec;border-radius:11px;font-size:1rem}
+  .login-field input:focus{outline:none;border-color:#ff7a1a;box-shadow:0 0 0 3px rgba(255,122,26,.15)}
+  .login-err{color:#c81e1e;font-size:.83rem;min-height:1.1rem;margin:-.4rem 0 .7rem;text-align:left}
+  .login-foot{margin-top:1.3rem;font-size:.78rem;color:#8595a8}
+  .login-foot a{color:#0b66c3;text-decoration:none}
+</style>
 </head>
-<body>Redirecting to the <a href="dashboard.html">Team Dashboard</a>…</body>
+<body>
+<div class="login-wrap">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <span class="login-logo">SDC</span>
+    <h1>Team Login</h1>
+    <p class="sub">Khaaliq's Mission · Internal panel</p>
+    <div class="login-field">
+      <label for="pass">Passcode</label>
+      <input type="password" id="pass" placeholder="Enter team passcode" autofocus />
+    </div>
+    <div class="login-err" id="err"></div>
+    <button class="btn btn-primary btn-lg" type="submit" style="width:100%;justify-content:center">Enter panel →</button>
+    <p class="login-foot">🔒 Authorised KOBIS team only · <a href="index.html">← Back to site</a></p>
+  </form>
+</div>
+
+<script src="data.js"></script>
+<script>
+  (function () {
+    var D = window.SDC_DATA;
+    // Already logged in this session? Go straight in.
+    if (sessionStorage.getItem(D.ADMIN_KEY) === "ok") { location.replace("dashboard.html"); return; }
+    var form = document.getElementById("loginForm");
+    var pass = document.getElementById("pass");
+    var err = document.getElementById("err");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (pass.value === D.ADMIN_PASS) {
+        sessionStorage.setItem(D.ADMIN_KEY, "ok");
+        location.replace("dashboard.html");
+      } else {
+        err.textContent = "Incorrect passcode. Please try again.";
+        pass.value = "";
+        pass.focus();
+      }
+    });
+  })();
+</script>
+</body>
 </html>
