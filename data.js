@@ -70,19 +70,18 @@
     { t: "Smart Business Website", d: "Built around your business goals." },
     { t: "Mobile-Friendly Design", d: "Looks sharp on every device." },
     { t: "Professional Copywriting", d: "Clear, persuasive, business-focused." },
-    { t: "Google Search Ready", d: "Customers find you online." },
-    { t: "WhatsApp Integration", d: "Connect with customers instantly." },
+    { t: "Search-Engine Ready", d: "Indexed by Google, ready to be found." },
+    { t: "WhatsApp Click-to-Chat", d: "One-tap chat button for customers." },
     { t: "Contact & Enquiry Forms", d: "Leads land straight in your inbox." },
     { t: "Photo Gallery", d: "Showcase products and services." },
-    { t: "Google Map Listing", d: "Easy for customers to reach you." },
+    { t: "Google Map Embed", d: "Your location shown on your site." },
     { t: "Domain Name Included", d: "Your own .com or .my address." },
     { t: "1-Year Hosting", d: "Reliable and secure, handled for you." },
     { t: "SSL Security", d: "Trusted https:// padlock included." },
     { t: "4-Language Support", d: "EN · BM · 中文 · Iban." },
     { t: "News & Updates Module", d: "Share promos and announcements." },
     { t: "Fast-Loading Pages", d: "Better experience, better results." },
-    { t: "Easy Dashboard", d: "Edit content yourself, no code." },
-    { t: "AI Chatbot & Automation", d: "Answer customers around the clock." }
+    { t: "Easy Dashboard", d: "Edit content yourself, no code." }
   ];
 
   // Activation offer + upsell add-ons shown on the checkout (pay) page.
@@ -94,12 +93,9 @@
     { k: "WhatsApp Automation", p: 250, d: "Auto-replies, order alerts & follow-ups." },
     { k: "E-Commerce Store", p: 600, d: "Sell online with cart & checkout." },
     { k: "Booking System", p: 350, d: "Let customers book and pay online." },
-    { k: "Logo & Branding Kit", p: 200, d: "Professional logo + brand colours." },
-    { k: "SEO Setup", p: 300, d: "Rank higher and get found on Google." },
-    { k: "Google Business Profile", p: 150, d: "Show up on Google Maps & Search." },
-    { k: "Social Media Kit", p: 200, d: "Profile, covers & post templates." },
-    { k: "Business Email", p: 120, d: "you@yourbusiness.com (1 year)." },
-    { k: "Extra Language", p: 150, d: "Add BM / 中文 / Iban to your site." }
+    { k: "Advanced SEO", p: 300, d: "Keyword optimization & higher Google ranking." },
+    { k: "Google Business Profile", p: 150, d: "Setup & verification of your Google listing." },
+    { k: "Business Email", p: 120, d: "you@yourbusiness.com (1 year)." }
   ];
   // Khaaliq's WhatsApp number for orders (international format, no + or spaces).
   // TODO: replace with the real number, e.g. "60128889999".
