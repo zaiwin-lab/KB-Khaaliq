@@ -242,7 +242,10 @@
     var n = (window.SDC_DATA && window.SDC_DATA.KHAALIQ_WA || "").replace(/\D/g, "");
     if (!n) return; // stays hidden until the number is added in data.js
     var a = document.getElementById("waFloat");
-    a.href = "https://wa.me/" + n + "?text=" + encodeURIComponent("Hi Khaaliq, I'd like to know more about activating my business website.");
+    a.href = "https://wa.me/" + n + "?text=" + encodeURIComponent(
+      "🟠 SDC WEBSITE ENQUIRY 🟠\n(via Sarawak Digital Champion website)\n\n" +
+      "Hi Khaaliq! 👋 I'm interested in activating my business website (from RM500).\n\n" +
+      "🏢 My business name: \n📍 District: \n\nPlease tell me how to get started. Thank you!");
     a.style.display = "flex";
   })();
 </script>

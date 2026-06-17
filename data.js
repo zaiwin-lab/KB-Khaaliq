@@ -98,8 +98,7 @@
     { k: "Business Email", p: 120, d: "you@yourbusiness.com (1 year)." }
   ];
   // Khaaliq's WhatsApp number for orders (international format, no + or spaces).
-  // TODO: replace with the real number, e.g. "60128889999".
-  const KHAALIQ_WA = "";
+  const KHAALIQ_WA = "601128465813";
 
   const STORAGE_KEY = "sdc_submissions_v1";
   const DRAFT_KEY = "sdc_draft_v2";

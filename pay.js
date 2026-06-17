@@ -61,14 +61,17 @@
   /* WhatsApp order */
   function orderText(total) {
     const lines = [
+      `🟠 *SDC WEBSITE ORDER* 🟠`,
+      `(via Sarawak Digital Champion website)`,
+      ``,
       `Hi Khaaliq, I'd like to activate my website! 🚀`,
-      biz ? `Business: ${biz}` : null,
-      owner ? `Owner: ${owner}` : null,
+      biz ? `🏢 Business: ${biz}` : null,
+      owner ? `👤 Owner: ${owner}` : null,
       ``,
       `• Website Activation — ${money(D.ACTIVATION_PRICE)}`
     ].filter(Boolean);
     selected.forEach(i => lines.push(`• ${D.ADDONS[i].k} — ${money(D.ADDONS[i].p)}`));
-    lines.push(``, `Total: ${money(total != null ? total : D.ACTIVATION_PRICE)}`, ``,
+    lines.push(``, `💰 Total: ${money(total != null ? total : D.ACTIVATION_PRICE)}`, ``,
       `Please send me the payment details. Thank you!`);
     return lines.join("\n");
   }
