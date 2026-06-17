@@ -27,7 +27,7 @@
 
   /* included list (from offerings) */
   $("#inclGrid").innerHTML = D.OFFERINGS.map(o =>
-    `<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${esc(o.t)}</li>`).join("");
+    `<li class="${o.free ? "is-free" : ""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${esc(o.t)}${o.free ? ` <span class="free-badge">FREE</span>` : ""}</li>`).join("");
 
   /* add-ons */
   const selected = new Set();

@@ -55,8 +55,7 @@
 
   // High-value needs carry more weight in lead scoring (budget signals).
   const HIGH_VALUE_NEEDS = [
-    "E-Commerce", "AI Agent", "AI Chatbot", "CRM",
-    "WhatsApp Automation", "Booking System"
+    "E-Commerce", "AI Agent", "AI Chatbot", "CRM", "Booking System"
   ];
 
   // Simple 4-stage pipeline (A → D), mirrors the KSA/KSB build flow.
@@ -67,21 +66,22 @@
   // What every business receives — straight from the SDC poster offer.
   // Shown on the landing as proof of capability ("seeing is believing").
   const OFFERINGS = [
-    { t: "Smart Business Website", d: "Built around your business goals." },
-    { t: "Mobile-Friendly Design", d: "Looks sharp on every device." },
-    { t: "Professional Copywriting", d: "Clear, persuasive, business-focused." },
-    { t: "Search-Engine Ready", d: "Indexed by Google, ready to be found." },
-    { t: "WhatsApp Click-to-Chat", d: "One-tap chat button for customers." },
-    { t: "Contact & Enquiry Forms", d: "Leads land straight in your inbox." },
-    { t: "Photo Gallery", d: "Showcase products and services." },
-    { t: "Google Map Embed", d: "Your location shown on your site." },
-    { t: "Domain Name Included", d: "Your own .com or .my address." },
-    { t: "1-Year Hosting", d: "Reliable and secure, handled for you." },
+    { t: "Professional Business Website", d: "Built around your business goals." },
+    { t: "Mobile Responsive Design", d: "Looks sharp on every device." },
+    { t: "WhatsApp Click-to-Chat Button", d: "One-tap chat button for customers." },
+    { t: "Contact & Enquiry Form", d: "Leads land straight in your inbox." },
+    { t: "Google Map Integration", d: "Your location shown on your site." },
+    { t: "Domain Name (1 Year)", d: "Your own .com or .my address." },
+    { t: "Hosting (1 Year)", d: "Reliable and secure, handled for you." },
     { t: "SSL Security", d: "Trusted https:// padlock included." },
+    { t: "Basic SEO Setup", d: "Indexed by Google, ready to be found." },
+    { t: "Easy Dashboard Access", d: "Edit content yourself, no code." },
+    { t: "Fast Loading Pages", d: "Better experience, better results." },
     { t: "4-Language Support", d: "EN · BM · 中文 · Iban." },
-    { t: "News & Updates Module", d: "Share promos and announcements." },
-    { t: "Fast-Loading Pages", d: "Better experience, better results." },
-    { t: "Easy Dashboard", d: "Edit content yourself, no code." }
+    // Free bonuses — included at no extra cost.
+    { t: "Professional Copywriting", d: "Clear, persuasive, business-focused.", free: true },
+    { t: "Photo Gallery Module", d: "Showcase products and services.", free: true },
+    { t: "Promotion Module", d: "Highlight your latest offers and deals.", free: true }
   ];
 
   // Activation offer + upsell add-ons shown on the checkout (pay) page.
@@ -89,13 +89,12 @@
   const ACTIVATION_PRICE = 500;
   const ACTIVATION_WAS = 1000;
   const ADDONS = [
-    { k: "AI Chatbot", p: 300, d: "Answers customers 24/7 on your site." },
-    { k: "WhatsApp Automation", p: 250, d: "Auto-replies, order alerts & follow-ups." },
-    { k: "E-Commerce Store", p: 600, d: "Sell online with cart & checkout." },
-    { k: "Booking System", p: 350, d: "Let customers book and pay online." },
-    { k: "Advanced SEO", p: 300, d: "Keyword optimization & higher Google ranking." },
-    { k: "Google Business Profile", p: 150, d: "Setup & verification of your Google listing." },
-    { k: "Business Email", p: 120, d: "you@yourbusiness.com (1 year)." }
+    { k: "AI Chatbot", p: 200, d: "24/7 AI staff for your website. Answers visitor questions and assists enquiries." },
+    { k: "E-Commerce Store", p: 600, d: "Online product catalogue, shopping cart and checkout system." },
+    { k: "Booking System", p: 150, d: "Allow customers to book appointments, consultations or services online." },
+    { k: "Google Business Profile", p: 150, d: "Setup and optimisation of Google Business Profile." },
+    { k: "Business Email", p: 100, d: "1 business email account (example: you@yourbusiness.com)." },
+    { k: "News & Updates Module", p: 100, d: "Publish company news, announcements, articles and updates." }
   ];
   // Khaaliq's WhatsApp number for orders (international format, no + or spaces).
   const KHAALIQ_WA = "601128465813";

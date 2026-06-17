@@ -679,6 +679,10 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
 .incl-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .45rem 1rem; }
 .incl-grid li { display: flex; align-items: center; gap: .5rem; font-size: .88rem; color: var(--ink); }
 .incl-grid svg { width: 17px; height: 17px; color: var(--ok); flex: none; }
+.free-badge { display: inline-block; font-size: .6rem; font-weight: 800; letter-spacing: .04em; line-height: 1;
+  color: #fff; background: var(--ok); padding: .2rem .4rem; border-radius: 999px; vertical-align: middle; }
+.offer-item .free-badge { font-size: .62rem; margin-left: .25rem; }
+.offer-item.is-free .offer-check, .incl-grid li.is-free svg { color: var(--orange-2); }
 
 .addon-title { font-size: 1.15rem; margin: 0; }
 .addon-title span { color: var(--muted); font-weight: 500; font-size: .9rem; }

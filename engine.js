@@ -100,7 +100,7 @@
     if (challenges.includes("Marketing")) recs.add("Social Media + SEO");
     if (challenges.includes("Branding")) recs.add("Branding & Logo");
     if (d.category === "Restaurant" || d.category === "Catering" ||
-        d.category === "Retail") recs.add("WhatsApp Automation");
+        d.category === "Retail") recs.add("Booking System");
     if (needs.includes("E-Commerce") || d.category === "Retail")
       recs.add("E-Commerce Store");
     needs.forEach(n => { if (D.HIGH_VALUE_NEEDS.includes(n)) recs.add(n); });
