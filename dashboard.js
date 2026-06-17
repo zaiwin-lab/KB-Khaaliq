@@ -450,7 +450,7 @@
       { businessName: "ABC Catering", ownerName: "Siti Rahman", mobile: "012-345 6789", email: "abc@catering.my",
         category: "Catering", district: "Kuching", aiQ1: "Halal catering for corporate and government events.",
         aiQ2: "Corporate & government organisers", aiQ4: "Reliable halal certification, on-time delivery",
-        needs: ["Website", "Google Business Profile", "AI Chatbot", "WhatsApp Automation"], eligible: true,
+        needs: ["Website", "Google Business Profile", "AI Chatbot", "Booking System"], eligible: true,
         linkText: "https://facebook.com/abccatering https://instagram.com/abccatering" },
       { businessName: "Borneo Tech Repairs", ownerName: "James Anyi", mobile: "013-888 1122", email: "hello@borneotech.my",
         category: "Services", district: "Miri", aiQ1: "Fast laptop and phone repairs with warranty.",

@@ -43,7 +43,7 @@
 
   const NEEDS = [
     "Website", "Sales Page", "AI Chatbot", "Booking System", "E-Commerce",
-    "CRM", "WhatsApp Automation", "AI Agent", "SEO", "Social Media",
+    "CRM", "AI Agent", "SEO", "Social Media",
     "Branding", "Logo", "Business Email", "Hosting", "Domain Name",
     "Google Business Profile"
   ];
