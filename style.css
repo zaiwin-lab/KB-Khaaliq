@@ -241,8 +241,10 @@ input.invalid, select.invalid, textarea.invalid { border-color: #e0494b; box-sha
 .foot-col h4 { color: #fff; font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; }
 .foot-col a { display: block; color: #9fb4d1; text-decoration: none; font-size: .88rem; padding: .2rem 0; }
 .foot-col a:hover { color: var(--orange-lt); }
-.foot-copy { border-top: 1px solid rgba(255,255,255,.08); text-align: center; font-size: .8rem; color: #8aa0bd; padding: 1rem; }
-.kobis-bar { height: .75in; display: grid; place-items: center; background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.06); }
+.foot-org { display: block; color: #9fb4d1; font-size: .88rem; padding: .2rem 0; }
+.foot-org-sub { color: #7d93b3; font-size: .8rem; max-width: 30ch; }
+.foot-copy { border-top: 1px solid rgba(255,255,255,.08); text-align: center; font-size: .8rem; color: #8aa0bd; padding: 1rem; line-height: 1.6; }
+.kobis-bar { min-height: .75in; display: grid; place-items: center; background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.06); padding: .7rem 1rem; }
 .kobis-bar p { margin: 0; font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.85); }
 .kobis-bar .kobis-link { color: inherit; text-decoration: none; font-weight: 600; transition: .2s; }
 .kobis-bar .kobis-link:hover {
@@ -253,7 +255,9 @@ input.invalid, select.invalid, textarea.invalid { border-color: #e0494b; box-sha
 /* ---------- Responsive -------------------------------------------- */
 @media (max-width: 860px) {
   .pillars-grid { grid-template-columns: 1fr 1fr; }
-  .foot-inner { grid-template-columns: 1fr; gap: 1.4rem; }
+  .foot-inner { grid-template-columns: 1fr; gap: 1.6rem; text-align: center; }
+  .foot-brand .logo { margin-left: auto; margin-right: auto; }
+  .foot-brand p, .foot-org-sub { max-width: 40ch; margin-left: auto; margin-right: auto; }
 }
 @media (max-width: 600px) {
   .grid-2 { grid-template-columns: 1fr; }
