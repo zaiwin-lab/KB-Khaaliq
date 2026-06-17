@@ -616,6 +616,19 @@ ul.rec { margin: .2rem 0; padding-left: 1.1rem; }
 .preview-row { display: flex; gap: .5rem; margin-bottom: .7rem; }
 .preview-row input { flex: 1; }
 
+/* ---- Stage C: live message copywriting preview ---- */
+.msg-preview { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem; margin-bottom: .3rem; }
+@media (max-width: 760px){ .msg-preview { grid-template-columns: 1fr; } }
+.msg-card { background: var(--navy-900); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-sm); padding: .7rem .8rem; }
+.msg-card-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  font-size: .82rem; font-weight: 700; color: #cfe0f5; margin-bottom: .45rem; }
+.msg-card-head em { color: #ff9b6b; font-weight: 500; font-style: normal; }
+.msg-subj { font-size: .8rem; color: #9fb3cf; margin-bottom: .4rem; }
+.msg-subj b { color: #cfe0f5; }
+.msg-body { white-space: pre-wrap; word-break: break-word; font-size: .8rem; line-height: 1.45;
+  color: #d7e3f5; margin: 0; font-family: inherit; max-height: 220px; overflow: auto; }
+.btn.is-off { opacity: .55; }
+
 /* ---- Stage C: client open counter ---- */
 .opens-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin-top: .7rem; }
 .opens-pill { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; font-weight: 700; color: var(--navy-800);

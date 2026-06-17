@@ -144,9 +144,24 @@
           <input id="previewUrl" type="url" placeholder="Paste the website preview link (https://…)" value="${esc(r.previewUrl || "")}" />
           <button class="btn btn-ghost btn-sm" id="savePreview">Save</button>
         </div>
+
+        <p class="pipe-step" style="margin-top:.6rem">Message preview — exactly what the client receives</p>
+        <div class="msg-preview">
+          <div class="msg-card">
+            <div class="msg-card-head"><span>🟢 WhatsApp</span><button class="btn btn-ghost btn-sm" id="copyMsg">Copy</button></div>
+            <pre class="msg-body" id="waText"></pre>
+          </div>
+          <div class="msg-card">
+            <div class="msg-card-head"><span>✉️ Email${r.email ? "" : " <em>(no email on file)</em>"}</span><button class="btn btn-ghost btn-sm" id="copyEmail">Copy</button></div>
+            <div class="msg-subj"><b>Subject:</b> <span id="emailSubj"></span></div>
+            <pre class="msg-body" id="emailText"></pre>
+          </div>
+        </div>
+
         <div class="d-actions">
-          <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send preview on WhatsApp</a>
-          <button class="btn btn-ghost btn-sm" id="copyMsg">Copy message</button>
+          <a class="btn btn-dark btn-sm" id="waClient" target="_blank" rel="noopener">🟢 Send on WhatsApp</a>
+          <a class="btn btn-dark btn-sm" id="emailClient">✉️ Send Email</a>
+          <button class="btn btn-primary btn-sm" id="sendBoth">🚀 Send both</button>
           <button class="btn btn-ghost btn-sm" id="copyLink">Copy preview link</button>
           <a class="btn btn-ghost btn-sm" id="payLink" href="${payUrl(r)}" target="_blank" rel="noopener">💳 Open pay page</a>
         </div>
@@ -204,17 +219,40 @@
       saveBlob(blob, top + ".zip");
     };
 
-    // STAGE C — preview link, WhatsApp send, payment + onboarding stage buttons
-    const pv = $("#previewUrl"), wa = $("#waClient");
-    if (wa) wa.href = waHref(r);
+    // STAGE C — preview link, WhatsApp + Email send, payment + onboarding stage buttons
+    const pv = $("#previewUrl"), wa = $("#waClient"), em = $("#emailClient");
+    // Live message preview + action links — refreshed whenever the link changes.
+    function refreshMsgs() {
+      if (wa) wa.href = waHref(r);
+      if (em) {
+        em.href = mailtoHref(r);
+        if (!r.email) { em.classList.add("is-off"); em.title = "No email on file for this client"; }
+      }
+      const waT = $("#waText"); if (waT) waT.textContent = previewMessage(r);
+      const eS = $("#emailSubj"); if (eS) eS.textContent = emailSubject(r);
+      const eT = $("#emailText"); if (eT) eT.textContent = emailBody(r);
+    }
+    refreshMsgs();
     if (pv) {
-      pv.oninput = () => { r.previewUrl = pv.value.trim(); if (wa) wa.href = waHref(r); };
+      pv.oninput = () => { r.previewUrl = pv.value.trim(); refreshMsgs(); };
       $("#savePreview").onclick = () => { r.previewUrl = pv.value.trim(); E.upsert(r); openDrawer(r.id); };
     }
     const cm = $("#copyMsg");
     if (cm) cm.onclick = async () => {
       try { await navigator.clipboard.writeText(previewMessage(r)); flashBtn(cm, "Copied ✓"); }
       catch (_) { const out = $("#genOut"); out.style.display = "block"; out.textContent = previewMessage(r); }
+    };
+    const ce = $("#copyEmail");
+    if (ce) ce.onclick = async () => {
+      const txt = "Subject: " + emailSubject(r) + "\n\n" + emailBody(r);
+      try { await navigator.clipboard.writeText(txt); flashBtn(ce, "Copied ✓"); }
+      catch (_) { const out = $("#genOut"); out.style.display = "block"; out.textContent = txt; }
+    };
+    const sb = $("#sendBoth");
+    if (sb) sb.onclick = () => {
+      openLink(waHref(r), true);                       // WhatsApp in a new tab
+      setTimeout(() => openLink(mailtoHref(r), false), 350); // then the email client
+      flashBtn(sb, "Opening… ✓");
     };
     const cl = $("#copyLink");
     if (cl) cl.onclick = async () => {
@@ -326,6 +364,31 @@
     const n = waNumber(r.mobile);
     const base = n ? `https://wa.me/${n}` : `https://wa.me/`;
     return `${base}?text=${encodeURIComponent(previewMessage(r))}`;
+  }
+  // Email copywriting — slightly more formal than WhatsApp, with a subject line.
+  function emailSubject(r) {
+    return `Your ${r.businessName || "business"} website preview is ready 🎉`;
+  }
+  function emailBody(r) {
+    const link = trackUrl(r) || r.previewUrl || "(link coming)";
+    return `Hi ${r.ownerName || "there"},\n\n` +
+      `Great news — your new ${r.businessName || "business"} website preview is ready to view:\n\n` +
+      `${link}\n\n` +
+      `If you love it, you can activate your website from RM500 (50% off — for the first 30 businesses) here:\n${payUrl(r)}\n\n` +
+      `Take a look and let me know what you think — happy to fine-tune anything.\n\n` +
+      `Warm regards,\nKhaaliq\nKhaaliq's Mission · Sarawak Digital Champion`;
+  }
+  function mailtoHref(r) {
+    return `mailto:${encodeURIComponent(r.email || "")}` +
+      `?subject=${encodeURIComponent(emailSubject(r))}` +
+      `&body=${encodeURIComponent(emailBody(r))}`;
+  }
+  // Fire a link without relying on inline anchors (used by "Send both").
+  function openLink(href, newTab) {
+    const a = document.createElement("a");
+    a.href = href;
+    if (newTab) { a.target = "_blank"; a.rel = "noopener"; }
+    document.body.appendChild(a); a.click(); a.remove();
   }
   function flashBtn(b, txt) { if (!b) return; const o = b.textContent; b.textContent = txt; setTimeout(() => b.textContent = o, 1400); }
 
