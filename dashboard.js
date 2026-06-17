@@ -225,14 +225,16 @@
     function refreshMsgs() {
       if (wa) wa.href = waHref(r);
       if (em) {
-        em.href = mailtoHref(r);
         if (!r.email) { em.classList.add("is-off"); em.title = "No email on file for this client"; }
+        else { em.classList.remove("is-off"); em.title = emailAutoReady() ? "Sends automatically in the background" : "Opens your mail app, pre-filled"; }
       }
       const waT = $("#waText"); if (waT) waT.textContent = previewMessage(r);
       const eS = $("#emailSubj"); if (eS) eS.textContent = emailSubject(r);
       const eT = $("#emailText"); if (eT) eT.textContent = emailBody(r);
     }
     refreshMsgs();
+    // Email send button → automatic via EmailJS when configured, else mail-app fallback.
+    if (em) em.onclick = (e) => { e.preventDefault(); sendEmail(r, em); };
     if (pv) {
       pv.oninput = () => { r.previewUrl = pv.value.trim(); refreshMsgs(); };
       $("#savePreview").onclick = () => { r.previewUrl = pv.value.trim(); E.upsert(r); openDrawer(r.id); };
@@ -250,9 +252,9 @@
     };
     const sb = $("#sendBoth");
     if (sb) sb.onclick = () => {
-      openLink(waHref(r), true);                       // WhatsApp in a new tab
-      setTimeout(() => openLink(mailtoHref(r), false), 350); // then the email client
-      flashBtn(sb, "Opening… ✓");
+      openLink(waHref(r), true);   // WhatsApp opens in a new tab (pre-filled)
+      sendEmail(r);                // Email sends automatically (or opens mail app)
+      flashBtn(sb, emailAutoReady() ? "WhatsApp + Email sent ✓" : "Opening… ✓", 3000);
     };
     const cl = $("#copyLink");
     if (cl) cl.onclick = async () => {
@@ -383,6 +385,32 @@
       `?subject=${encodeURIComponent(emailSubject(r))}` +
       `&body=${encodeURIComponent(emailBody(r))}`;
   }
+  // True when EmailJS is configured AND the SDK loaded → we can send silently.
+  function emailAutoReady() {
+    const c = (D.EMAILJS || {});
+    return !!(window.emailjs && c.publicKey && c.serviceId && c.templateId);
+  }
+  // Send the email. If EmailJS is set up → fully automatic, background, no popup.
+  // Otherwise → fall back to opening the team member's mail app (pre-filled).
+  function sendEmail(r, btn) {
+    if (!r.email) { if (btn) flashBtn(btn, "No email on file"); return; }
+    if (!emailAutoReady()) { openLink(mailtoHref(r), false); return; }
+    const c = D.EMAILJS;
+    try { window.emailjs.init({ publicKey: c.publicKey }); } catch (_) {}
+    const params = {
+      to_email: r.email,
+      to_name: r.ownerName || "there",
+      subject: emailSubject(r),
+      message: emailBody(r),
+      business_name: r.businessName || "",
+      preview_link: trackUrl(r) || r.previewUrl || "",
+      pay_link: payUrl(r)
+    };
+    if (btn) flashBtn(btn, "Sending…", 4000);
+    window.emailjs.send(c.serviceId, c.templateId, params)
+      .then(() => { if (btn) flashBtn(btn, "Email sent ✓"); })
+      .catch(() => { if (btn) flashBtn(btn, "Failed — opening mail app"); openLink(mailtoHref(r), false); });
+  }
   // Fire a link without relying on inline anchors (used by "Send both").
   function openLink(href, newTab) {
     const a = document.createElement("a");
@@ -390,7 +418,7 @@
     if (newTab) { a.target = "_blank"; a.rel = "noopener"; }
     document.body.appendChild(a); a.click(); a.remove();
   }
-  function flashBtn(b, txt) { if (!b) return; const o = b.textContent; b.textContent = txt; setTimeout(() => b.textContent = o, 1400); }
+  function flashBtn(b, txt, ms) { if (!b) return; const o = b.dataset.label || b.textContent; b.dataset.label = o; b.textContent = txt; setTimeout(() => b.textContent = o, ms || 1400); }
 
   /* ---------- exports ---------------------------------------------- */
   function saveBlob(blob, name) {

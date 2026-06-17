@@ -105,6 +105,23 @@
   const DRAFT_KEY = "sdc_draft_v2";
   const DRIVE_ROOT = "SDC — Client Intake"; // shared Google Drive home
 
+  // Automatic email sending (EmailJS — free, no backend needed).
+  // Leave blank to fall back to opening the team member's mail app.
+  // To turn ON fully-automatic background email:
+  //   1. Sign up free at https://www.emailjs.com
+  //   2. Add an Email Service (e.g. connect Gmail) -> copy its Service ID
+  //   3. Create an Email Template using these variables:
+  //        {{to_email}} {{to_name}} {{subject}} {{message}}
+  //        {{business_name}} {{preview_link}} {{pay_link}}
+  //      (set the template "To" field to {{to_email}}) -> copy its Template ID
+  //   4. Account -> General -> copy your Public Key
+  //   5. Paste the three values below. Done — emails now send automatically.
+  const EMAILJS = {
+    publicKey: "",
+    serviceId: "",
+    templateId: ""
+  };
+
   // Team panel passcode. Change this to your own secret before sharing.
   // NOTE: this is a lightweight gate for beta — it keeps clients & casual
   // visitors out, but is not bank-grade security. Real auth arrives with
@@ -116,6 +133,6 @@
     DISTRICTS, CATEGORIES, STAGES, OPERATING_AREAS, CHALLENGES,
     NEEDS, FILE_CATEGORIES, HIGH_VALUE_NEEDS, STATUSES, OFFERINGS,
     CURRENCY, ACTIVATION_PRICE, ACTIVATION_WAS, ADDONS, KHAALIQ_WA,
-    STORAGE_KEY, DRAFT_KEY, DRIVE_ROOT, ADMIN_PASS, ADMIN_KEY
+    STORAGE_KEY, DRAFT_KEY, DRIVE_ROOT, ADMIN_PASS, ADMIN_KEY, EMAILJS
   };
 })();
