@@ -242,7 +242,10 @@ input.invalid, select.invalid, textarea.invalid { border-color: #e0494b; box-sha
 .foot-col a { display: block; color: #9fb4d1; text-decoration: none; font-size: .88rem; padding: .2rem 0; }
 .foot-col a:hover { color: var(--orange-lt); }
 .foot-org { display: block; color: #9fb4d1; font-size: .88rem; padding: .2rem 0; }
-.foot-org-sub { color: #7d93b3; font-size: .8rem; max-width: 30ch; }
+.foot-org-sub { color: #7d93b3; font-size: .8rem; max-width: 30ch; font-style: italic; }
+.foot-orgs { list-style: none; margin: .35rem 0 .55rem; padding: 0; }
+.foot-orgs li { color: #c3d2e8; font-size: .9rem; font-weight: 600; padding: .12rem 0; display: flex; align-items: center; gap: .45rem; }
+.foot-orgs li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--orange); flex: none; }
 .foot-copy { border-top: 1px solid rgba(255,255,255,.08); text-align: center; font-size: .8rem; color: #8aa0bd; padding: 1rem; line-height: 1.6; }
 .kobis-bar { min-height: .75in; display: grid; place-items: center; background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.06); padding: .7rem 1rem; }
 .kobis-bar p { margin: 0; font-size: .72rem; font-weight: 300; color: rgba(255,255,255,.85); }
