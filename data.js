@@ -75,11 +75,11 @@
     { t: "Hosting (1 Year)", d: "Reliable and secure, handled for you." },
     { t: "SSL Security", d: "Trusted https:// padlock included." },
     { t: "Basic SEO Setup", d: "Indexed by Google, ready to be found." },
-    { t: "Easy Dashboard Access", d: "Edit content yourself, no code." },
     { t: "Fast Loading Pages", d: "Better experience, better results." },
     { t: "4-Language Support", d: "EN · BM · 中文 · Iban." },
+    { t: "Professional Copywriting", d: "Clear, persuasive, business-focused." },
     // Free bonuses — included at no extra cost.
-    { t: "Professional Copywriting", d: "Clear, persuasive, business-focused.", free: true },
+    { t: "Easy Dashboard Access", d: "Edit content yourself, no code.", free: true },
     { t: "Photo Gallery Module", d: "Showcase products and services.", free: true },
     { t: "Promotion Module", d: "Highlight your latest offers and deals.", free: true }
   ];
