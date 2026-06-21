@@ -61,8 +61,7 @@
   /* WhatsApp order */
   function orderText(total) {
     const lines = [
-      `🟠 *SDC WEBSITE ORDER* 🟠`,
-      `(via Sarawak Digital Champion website)`,
+      `🟠 *KSDC WEBSITE ORDER* 🟠`,
       ``,
       `Hi Khaaliq, I'd like to activate my website! 🚀`,
       biz ? `🏢 Business: ${biz}` : null,

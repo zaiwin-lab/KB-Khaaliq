@@ -32,7 +32,7 @@
     saveAll(loadAll().filter(r => r.id !== id));
   }
   function uid() {
-    return "SDC-" + Date.now().toString(36).toUpperCase() +
+    return "KSDC-" + Date.now().toString(36).toUpperCase() +
            "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
   }
 

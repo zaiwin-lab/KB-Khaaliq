@@ -1,5 +1,5 @@
 /* =====================================================================
-   ai-bot.js — "SDC AI Assistant" floating greeter widget (Phase 1)
+   ai-bot.js — "KSDC AI Assistant" floating greeter widget (Phase 1)
    Self-contained: injects its own styles + markup, no dependencies.
    Static / deterministic — zero backend, zero API cost.
    Drop the mascot image at assets/ai-bot.png (falls back to 🤖 if missing).
