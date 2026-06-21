@@ -367,8 +367,8 @@
     const link = trackUrl(r) || r.previewUrl || "(link coming)";
     return `Hi ${r.ownerName || "there"}, your new ${r.businessName || "business"} website preview is ready! 🎉\n\n` +
       `Preview: ${link}\n\n` +
-      `Like it? Activate from RM500 (50% off, first 30 businesses) here:\n${payUrl(r)}\n\n` +
-      `— Khaaliq's Mission · Sarawak Digital Champion`;
+      `Like it? Activate from RM500 (64% off, first 30 businesses) here:\n${payUrl(r)}\n\n` +
+      `— Khaaliq`;
   }
   function waHref(r) {
     const n = waNumber(r.mobile);
@@ -384,9 +384,9 @@
     return `Hi ${r.ownerName || "there"},\n\n` +
       `Great news — your new ${r.businessName || "business"} website preview is ready to view:\n\n` +
       `${link}\n\n` +
-      `If you love it, you can activate your website from RM500 (50% off — for the first 30 businesses) here:\n${payUrl(r)}\n\n` +
+      `If you love it, you can activate your website from RM500 (64% off — for the first 30 businesses) here:\n${payUrl(r)}\n\n` +
       `Take a look and let me know what you think — happy to fine-tune anything.\n\n` +
-      `Warm regards,\nKhaaliq\nKhaaliq's Mission · Sarawak Digital Champion`;
+      `Warm regards,\nKhaaliq`;
   }
   function mailtoHref(r) {
     return `mailto:${encodeURIComponent(r.email || "")}` +

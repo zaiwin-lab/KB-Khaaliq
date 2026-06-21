@@ -10,8 +10,8 @@
 
   /* ---------- knowledge (pre-written answers, no AI cost) ---------- */
   var REPLIES = {
-    price: "Your professional business website is just <b>RM500</b> — that's <b>50% off</b> " +
-      "the usual RM1,000 (first 30 businesses). It includes design, 1-year hosting + domain, " +
+    price: "Your professional business website is just <b>RM500</b> — that's <b>64% off</b> " +
+      "the usual RM1,380 (first 30 businesses). It includes design, 1-year hosting + domain, " +
       "SSL, WhatsApp button, Google Maps &amp; SEO — plus free bonuses. Optional add-ons: " +
       "<b>AI Chatbot (RM200)</b> or <b>E-Commerce store (RM600)</b>.",
     included: "Every build includes: a mobile-responsive business website, WhatsApp click-to-chat, " +
@@ -107,7 +107,7 @@
       + '<div id="aiPanel" role="dialog" aria-label="AI Assistant">'
         + '<div class="aiHead">'
           + '<div class="ha">' + avatar() + '</div>'
-          + '<div class="ht"><b>SDC AI Assistant</b><span><i></i>Online · replies instantly</span></div>'
+          + '<div class="ht"><b>KSDC AI Assistant</b><span><i></i>Online · replies instantly</span></div>'
           + '<button class="hx" aria-label="Close">✕</button>'
         + '</div>'
         + '<div class="aiBody" id="aiBody"></div>'
@@ -153,7 +153,7 @@
       launcher.style.display = "none";
       if (!greeted) {
         greeted = true;
-        botSay("Hi there! 👋 I'm the SDC AI Assistant. I can help you get a professional " +
+        botSay("Hi there! 👋 I'm the KSDC AI Assistant. I can help you get a professional " +
                "business website from <b>RM500</b>. What would you like to know?", 400);
       }
     }

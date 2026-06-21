@@ -87,7 +87,7 @@
   // Activation offer + upsell add-ons shown on the checkout (pay) page.
   const CURRENCY = "RM";
   const ACTIVATION_PRICE = 500;
-  const ACTIVATION_WAS = 1000;
+  const ACTIVATION_WAS = 1380;
   const ADDONS = [
     { k: "AI Chatbot", p: 200, d: "24/7 AI staff for your website. Answers visitor questions and assists enquiries." },
     { k: "E-Commerce Store", p: 600, d: "Online product catalogue, shopping cart and checkout system." },
