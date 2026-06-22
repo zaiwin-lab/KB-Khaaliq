@@ -89,6 +89,21 @@ export default async (req) => {
   const store = getStore("submissions");
 
   if (req.method === "GET") {
+    // Single-record lookup (?id=) returns only the minimal contact fields the
+    // public checkout needs — never the full record, for privacy.
+    const qid = new URL(req.url).searchParams.get("id");
+    if (qid) {
+      const rec = await store.get(String(qid), { type: "json" }).catch(() => null);
+      if (!rec) return json(null, 404);
+      return json({
+        id: rec.id,
+        businessName: rec.businessName || "",
+        ownerName: rec.ownerName || "",
+        email: rec.email || "",
+        mobile: rec.mobile || ""
+      });
+    }
+
     const { blobs } = await store.list();
     const records = await Promise.all(
       blobs.map((b) => store.get(b.key, { type: "json" }).catch(() => null))

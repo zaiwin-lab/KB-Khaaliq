@@ -21,6 +21,15 @@ const json = (body, status = 200) =>
 const clean = (s, max) =>
   String(s || "").replace(/[^a-zA-Z0-9 ]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 
+// Normalise a Malaysian mobile to local format (01XXXXXXXX) for the receipt.
+const normPhone = (s) => {
+  let d = String(s || "").replace(/\D/g, "");
+  if (d.startsWith("60")) d = "0" + d.slice(2);
+  return d;
+};
+
+const validEmail = (s) => /^\S+@\S+\.\S+$/.test(String(s || ""));
+
 export default async (req) => {
   if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
 
@@ -52,8 +61,11 @@ export default async (req) => {
     billCallbackUrl: origin + "/.netlify/functions/payment-callback",
     billExternalReferenceNo: ref,
     billTo: clean(o.owner || o.business || "Customer", 50) || "Customer",
-    billEmail: o.email || "noreply@khaaliqsdc.uk",
-    billPhone: o.phone || "0000000000",
+    // Use the customer's real email/phone so the official receipt reaches
+    // THEM. Leave blank (not a placeholder) when unknown, so ToyyibPay
+    // prompts them to fill it rather than mailing the receipt into a void.
+    billEmail: validEmail(o.email) ? o.email : "",
+    billPhone: normPhone(o.phone),
     billPaymentChannel: "2"          // 0=FPX, 1=card, 2=both
   });
 
