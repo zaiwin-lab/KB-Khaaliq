@@ -18,6 +18,7 @@
   const p = new URLSearchParams(location.search);
   const biz = (p.get("b") || "").trim();
   const owner = (p.get("name") || "").trim();
+  const recId = (p.get("id") || "").trim();
   if (biz) $("#bizName").textContent = biz;
   document.title = (biz ? biz + " — " : "") + "Activate Your Website";
 
@@ -83,6 +84,39 @@
     try { await navigator.clipboard.writeText(orderText(render())); e.target.textContent = "Copied ✓"; setTimeout(() => e.target.textContent = "Copy order details", 1400); }
     catch (_) {}
   });
+
+  /* ---------- Online payment (ToyyibPay), WhatsApp as fallback ------- */
+  function orderDescription() {
+    const parts = ["Website Activation"];
+    selected.forEach(i => parts.push(D.ADDONS[i].k));
+    return parts.join(", ");
+  }
+  const payOnlineBtn = $("#payOnlineBtn");
+  if (payOnlineBtn) payOnlineBtn.addEventListener("click", async () => {
+    const total = render();
+    const orig = payOnlineBtn.textContent;
+    payOnlineBtn.disabled = true;
+    payOnlineBtn.textContent = "Connecting to payment…";
+    try {
+      const res = await fetch("/.netlify/functions/create-bill", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ amount: total, business: biz, owner, id: recId, description: orderDescription() })
+      });
+      const data = await res.json().catch(() => null);
+      if (data && data.url) { location.href = data.url; return; }   // → ToyyibPay
+    } catch (_) { /* fall through to WhatsApp */ }
+    location.href = waHref(total);                                  // graceful fallback
+  });
+
+  /* ---------- success banner when returning from a paid bill -------- */
+  if (p.get("paid") === "1" || p.get("status_id") === "1") {
+    const ok = document.createElement("div");
+    ok.style.cssText = "margin:1rem 0;padding:.9rem 1rem;border-radius:10px;background:#e7f7ec;color:#176b35;font-weight:600;text-align:center";
+    ok.textContent = "✅ Payment received — thank you! We'll be in touch shortly.";
+    const anchor = $("#payOnlineBtn");
+    if (anchor && anchor.parentNode) anchor.parentNode.insertBefore(ok, anchor);
+  }
 
   render();
 })();
