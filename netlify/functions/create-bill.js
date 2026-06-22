@@ -18,8 +18,9 @@ const json = (body, status = 200) =>
   });
 
 // ToyyibPay only accepts letters, numbers and spaces in name/description.
+// Drop apostrophes outright (Mom's → Moms), then space-out other symbols.
 const clean = (s, max) =>
-  String(s || "").replace(/[^a-zA-Z0-9 ]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
+  String(s || "").replace(/['’`]/g, "").replace(/[^a-zA-Z0-9 ]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 
 // Normalise a Malaysian mobile to local format (01XXXXXXXX) for the receipt.
 const normPhone = (s) => {

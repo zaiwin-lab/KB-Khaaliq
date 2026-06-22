@@ -80,11 +80,6 @@
     return `${base}?text=${encodeURIComponent(orderText(total))}`;
   }
 
-  $("#copyOrder").addEventListener("click", async e => {
-    try { await navigator.clipboard.writeText(orderText(render())); e.target.textContent = "Copied ✓"; setTimeout(() => e.target.textContent = "Copy order details", 1400); }
-    catch (_) {}
-  });
-
   /* ---------- customer details (auto-fill the checkout) ------------- */
   // We already collected the customer's name/email/phone at intake — pull
   // them so the receipt reaches THEM and they barely type anything.
