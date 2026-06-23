@@ -93,7 +93,11 @@ export default async (req) => {
     // public checkout needs — never the full record, for privacy.
     const qid = new URL(req.url).searchParams.get("id");
     if (qid) {
-      const rec = await store.get(String(qid), { type: "json" }).catch(() => null);
+      // Strong consistency so a customer who pays immediately after signing up
+      // still gets their real details (and receipt) on the checkout.
+      const rec = await store
+        .get(String(qid), { type: "json", consistency: "strong" })
+        .catch(() => null);
       if (!rec) return json(null, 404);
       return json({
         id: rec.id,
@@ -119,7 +123,7 @@ export default async (req) => {
     // Is this a brand-new lead, or an update to an existing one?
     // Only a first-time arrival with real business details earns an alert,
     // so dashboard status-changes (which re-POST the same id) never spam.
-    const existing = await store.get(String(rec.id)).catch(() => null);
+    const existing = await store.get(String(rec.id), { consistency: "strong" }).catch(() => null);
     await store.setJSON(String(rec.id), rec);
 
     if (!existing && rec.businessName) {
