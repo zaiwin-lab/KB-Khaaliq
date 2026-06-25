@@ -48,7 +48,7 @@
     });
     $("#sumRows").innerHTML = rows.join("");
     $("#sumTotal").textContent = money(total);
-    $("#payBtn").href = waHref(total);
+    const _pb = $("#payBtn"); if (_pb) _pb.href = waHref(total);
     return total;
   }
 
@@ -123,10 +123,17 @@
       });
       const data = await res.json().catch(() => null);
       if (data && data.url) { location.href = data.url; return; }   // → ToyyibPay
-    } catch (_) { /* fall through to WhatsApp */ }
+    } catch (_) { /* show inline error below — never bounce to WhatsApp */ }
     payOnlineBtn.disabled = false;
     payOnlineBtn.textContent = orig;
-    location.href = waHref(total);                                  // graceful fallback
+    let e = document.querySelector("#payErr");
+    if (!e) {
+      e = document.createElement("p");
+      e.id = "payErr";
+      e.style.cssText = "color:#b42318;font-size:.85rem;text-align:center;margin:.6rem 0 0";
+      payOnlineBtn.parentNode.insertBefore(e, payOnlineBtn.nextSibling);
+    }
+    e.textContent = "⚠️ Payment is busy right now — please tap Pay again in a moment.";
   });
 
   /* ---------- result screen when returning from ToyyibPay ----------- */
