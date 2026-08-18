@@ -1,86 +1,144 @@
-# Sarawak Digital Champion — Abdul Khaaliq
+# Khaaliq Digital Champion Platform
 
-A two-part product for the Sarawak Digital Champion initiative (District Kuching),
-built for **KOBIS Berhad**:
+> **Portfolio maturity:** Live Pilot Platform · Human-Led Business Activation and Delivery Workflow
 
-1. **Khaaliq's Digital Champion landing** — his personal mission, the full service
-   offering as proof of capability, and a clear path to act.
-2. **Business Activation** — a short, "feel-good" form that turns each entrepreneur
-   into a structured, AI-ready client profile feeding the hybrid build pipeline.
+[Open the verified live platform](https://khaaliqsdc.uk)
 
-**Live:** https://khaaliqsdc.netlify.app
+Khaaliq Digital Champion Platform combines a public campaign presence, structured entrepreneur intake, team delivery pipeline and configurable payment handoff for a Sarawak Digital Champion service journey.
 
----
+The repository identity remains **Khaaliq Digital Champion Platform**; it should not be presented merely as an MVP.
 
-## Pages
+## Business problem
 
-| File | Purpose |
-|------|---------|
-| `index.html` / `landing.js` | Khaaliq landing: hero, mission + 4 pillars, the RM500 offer, **16-point offering showcase**, how-it-works, support/share, final CTA |
-| `activate.html` / `app.js` | The short 4-moment form (see below) |
-| `dashboard.html` / `dashboard.js` | Team CRM + build pipeline (Client Folder export, ZIP intake) |
-| `admin.html` | Redirect → `dashboard.html` (keeps the old link working) |
-| `engine.js` | Intelligence layer: AI summary, lead score, smart classifiers, folder/prompt generators |
-| `data.js` | Districts, categories, offerings, pipeline statuses, Drive home |
-| `style.css` | Navy · Orange · White design system |
+Small entrepreneurs often submit incomplete business information across WhatsApp, email, cloud folders and multiple forms. Delivery teams then spend time reorganising links, files, requirements, payment status and website-production notes before work can begin.
 
-No build step, no framework. Static files + vanilla JS. `dashboard.html` loads
-JSZip (CDN) only to package the Client Folder.
+This product creates one guided flow:
 
----
+**Discover → submit business profile → review → prepare delivery brief → build → preview → confirm payment → onboard → publish**
 
-## The short form (no more fatigue)
+## Intended users
 
-Four moments instead of twelve boxes:
+- entrepreneurs seeking a guided digital-presence service;
+- a named Digital Champion acting as the public service lead;
+- KOBIS business-development and delivery personnel;
+- authorised reviewers managing intake, preparation and payment status.
 
-1. **About you** — 6 essentials only (business, name, WhatsApp, email, category, district).
-2. **🔗 Smart Link Dump** — paste *all* links in one box; the AI **detects and labels**
-   each (Facebook, Shopee, Google, Website…) live, as chips.
-3. **📎 Smart File Dump** — drop everything in one zone; the AI **auto-categorizes**
-   each file (Logo, Profile, Certificates…), with manual override.
-4. **Your story** — 2 light questions + needs, optional "add more" section, then an
-   instant **AI Business Summary** (the trust payoff). Eligibility + one consent. Submit.
+## Core capabilities
 
-Drafts autosave; encouraging microcopy throughout.
+- a public Digital Champion landing experience;
+- a short entrepreneur-intake flow with consent;
+- bulk link entry with deterministic classification;
+- file metadata classification with manual correction;
+- a generated business summary and readiness indicators;
+- a team dashboard with search, filtering, stage management and exports;
+- structured client-folder and delivery-prompt generation;
+- a return path for completed delivery materials;
+- shared submission storage through Netlify Functions and Blobs;
+- configurable WhatsApp lead-alert integration;
+- configurable online-billing and payment-callback integration;
+- local browser fallback for demonstration and continuity.
 
----
+## Strategic value
 
-## The hybrid build pipeline (dashboard)
+The platform demonstrates a practical hybrid operating model: software structures the work while people retain responsibility for review, communication, production and client approval.
 
-Mirrors the KOBIS flow end to end. Pipeline stages:
+With appropriate controls, it can:
 
-`New → Reviewing → Folder Exported → Build Ready → Website In Progress → Preview Sent → Paid → Onboarded → Published`
+- reduce repeated questions during entrepreneur intake;
+- turn unstructured business material into a clearer delivery brief;
+- give the team one visible service pipeline;
+- connect lead intake, human review, build preparation and payment status;
+- create a replicable Digital Champion activation model for additional districts or service leads.
 
-Per client, the dashboard gives:
+These are intended operational benefits, not claims of customer volume, revenue, conversion or official programme adoption.
 
-- **⬇ Export Client Folder (.zip)** — a structured folder containing:
-  - `01_chatgpt-superprompt.txt` — pre-filled ChatGPT prompt
-  - `02_notebooklm-source.md` — clean source for NotebookLM → Profile2Website PDF
-  - `03_business-brief.json`, `04_summary`, `05_links`, `06_files-manifest`
-- **Copy ChatGPT prompt** / **Copy NotebookLM source** — one-click to clipboard
-- **📦 ZIP intake** — drop the finished Profile2Website ZIP back in → flips the stage
-  to **Build Ready** for the Claude build session
-- Status pipeline, lead score, JSON/CSV export, search/filter/sort
+## What the “intelligence” currently means
 
-### Shared storage — Google Drive
-The shared home is the Drive folder **`SDC — Client Intake`** (one subfolder per
-client). The dashboard generates the exact folder structure to file there. Auto-sync
-from the live portal into Drive is the next phase (needs a small backend).
+The browser engine uses deterministic rules to:
 
----
+- identify common link types;
+- classify file metadata;
+- calculate a completeness and readiness score;
+- recommend possible digital solutions;
+- assemble business summaries and production prompts.
 
-## Beta data note
-Submissions persist to `localStorage` so everything works with zero backend. File
-uploads store metadata (name, size, category); binary upload + shared team storage
-arrive with the backend phase. The deterministic "AI" in `engine.js` is swappable
-for the Claude API without UI changes (the record shape stays identical).
+It does not independently verify a business, determine government eligibility or call a live language model for these outputs. Scores and recommendations are workflow aids that require human review.
 
----
+## What is implemented
+
+The repository contains the public site, activation flow, team dashboard, deterministic engine, four-language content, payment pages, shared-data functions and integration code for alerts and billing.
+
+### Technology
+
+HTML · CSS · vanilla JavaScript · localStorage fallback · Netlify Functions · Netlify Blobs · JSZip · configurable WATI integration · configurable ToyyibPay integration · Netlify hosting
+
+The presence of integration code and a ready deployment does not prove transaction volume, settlement, service fulfilment or production-security assurance.
+
+## Delivery role
+
+**Ts. Zaiwin Kassim** leads product strategy, stakeholder requirements, solution architecture and supervised AI-assisted delivery with the **KOBIS AI Prodigy Team**. For this platform, that role covers the Digital Champion service model, entrepreneur journey, operational pipeline, system integration direction and responsible-use controls.
+
+Khaaliq serves as the named public-facing champion within the project context. This repository does not by itself establish government appointment, programme endorsement, exclusivity or adoption.
+
+## Responsible-use boundaries
+
+- Intake data can contain personal and commercially sensitive information and requires a clear privacy notice, lawful purpose, restricted access, retention period and deletion process.
+- Link and file classification describes submitted material; it does not verify authenticity, ownership or legal rights.
+- Readiness and lead scores must not be used as government, credit, grant or service-eligibility decisions.
+- Website copy, summaries and recommended solutions require business-owner approval.
+- WhatsApp alerts must use approved templates, authorised recipients and compliant opt-in practices.
+- Payment status must be confirmed through the authorised provider and reconciled against accounting records.
+- Payment credentials, tokens, callbacks and environment configuration must remain outside public documentation and source control.
+- A successful payment callback does not prove that a website, domain, email account or support package was delivered.
+- Dashboard access requires production-grade authentication, named accounts, role controls and audit logs before wider team use.
+- Exported folders and spreadsheets inherit the same privacy duties as the primary system.
+
+## Current limitations
+
+- deterministic rules are presented through an AI-style experience but do not constitute independent AI verification;
+- localStorage and shared-backend modes can behave differently and require explicit environment testing;
+- file intake may store metadata rather than complete binary assets in some flows;
+- production access-control, backup, recovery and deletion assurance are not documented as independently tested;
+- third-party alert and payment availability depends on external accounts, approvals and configuration;
+- no adoption, payment, publication or impact totals are verified by this README;
+- multilingual content and commercial terms require authorised review;
+- an automated end-to-end test suite is not documented.
 
 ## Run locally
-```bash
-python3 -m http.server 8000
-# index.html · activate.html · dashboard.html
-```
 
-*This Digital Experience is Part of the KOBIS Berhad Innovation Ecosystem.*
+Serve the repository as static files:
+
+    python3 -m http.server 8000
+
+Then open:
+
+- http://localhost:8000 — public landing page
+- http://localhost:8000/activate.html — entrepreneur intake
+- http://localhost:8000/dashboard.html — demonstration dashboard
+
+Backend integrations require separately approved Netlify and provider configuration.
+
+## Deployment evidence
+
+The connected hosting record identifies **khaaliqsdc** as the project, maps it to https://khaaliqsdc.uk and reports the current deployment as ready.
+
+This verifies the hosted platform, not official status, customer adoption, payment success or fulfilment quality.
+
+## Repository map
+
+- **index.html** and **landing.js** — public champion experience
+- **activate.html** and **app.js** — entrepreneur intake
+- **engine.js** — deterministic classification, scoring and summaries
+- **dashboard.html** and **dashboard.js** — delivery pipeline and exports
+- **pay.html** and **pay.js** — payment handoff experience
+- **netlify/functions** — submissions, billing and payment callback functions
+- **sync.js** — shared-record synchronisation
+- **i18n.js** — multilingual content
+- **privacy.html** — current privacy-facing content
+- **netlify.toml** — static and serverless hosting configuration
+
+Operational credentials, account details and settlement information should be maintained in restricted systems rather than public repository documentation.
+
+## Portfolio evidence
+
+Khaaliq Digital Champion Platform demonstrates end-to-end service architecture, structured entrepreneur intake, transparent automation, serverless integration and a scalable hero-partner model with human accountability.
